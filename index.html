@@ -1,0 +1,1815 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>OKINAWA BUSINESS ISLAND</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: one-hand phone scroll. Header strip, rivals, market, a snake-path board of 41 municipalities (6 columns), tile detail, news log. The four steps dock to the bottom edge. */
+:root{
+  --bg:#edf3f1;--panel:#ffffff;--panel2:#e1ebe8;--ink:#14303a;--muted:#55727b;--line:#c7d8d4;
+  --accent:#c4352c;--accent-ink:#ffffff;--good:#1b7a4c;--bad:#b3261e;--tok-ink:#ffffff;--moon-lit:#f2c14e;--moon-dark:#9fb5b9;
+  --p0:#d8453a;--p1:#2f6fcb;--p2:#8a52c4;--p3:#2a9466;
+  --rg-s:#1f8a9e;--rg-c:#c98a1b;--rg-n:#4c9a4a;--rg-i:#b4552d;--rg-m:#3d9be0;--rg-y:#d94f7a;
+  --f-display:"Shippori Mincho B1","Hiragino Mincho ProN","Yu Mincho",serif;
+  --f-body:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0c1c24;--panel:#132b36;--panel2:#1a3946;--ink:#e6efeb;--muted:#9bb5ba;--line:#274753;
+    --accent:#f06a58;--accent-ink:#1a0d0b;--good:#58c98f;--bad:#ff8a7a;--tok-ink:#0c1c24;--moon-lit:#f1d98a;--moon-dark:#1d3b48;
+    --p0:#f06a58;--p1:#6a9df0;--p2:#b98af0;--p3:#55c99a;
+    --rg-s:#45b7c9;--rg-c:#e8b04a;--rg-n:#7cc27a;--rg-i:#e68a5c;--rg-m:#6fb8f0;--rg-y:#f08aa8;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0c1c24;--panel:#132b36;--panel2:#1a3946;--ink:#e6efeb;--muted:#9bb5ba;--line:#274753;
+  --accent:#f06a58;--accent-ink:#1a0d0b;--good:#58c98f;--bad:#ff8a7a;--tok-ink:#0c1c24;--moon-lit:#f1d98a;--moon-dark:#1d3b48;
+  --p0:#f06a58;--p1:#6a9df0;--p2:#b98af0;--p3:#55c99a;
+  --rg-s:#45b7c9;--rg-c:#e8b04a;--rg-n:#7cc27a;--rg-i:#e68a5c;--rg-m:#6fb8f0;--rg-y:#f08aa8;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font:14px/1.6 var(--f-body);-webkit-text-size-adjust:100%;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:14px 150px}
+.wrap{max-width:560px;margin:0 auto;display:grid;gap:14px;min-width:0}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+h1,h2,p,ol,ul{margin:0}
+.eyebrow{font-size:11px;letter-spacing:.18em;color:var(--muted);font-weight:700}
+.h{font-family:var(--f-display);font-weight:800;font-size:17px;letter-spacing:.04em;text-wrap:balance}
+.note{font-size:12px;color:var(--muted);line-height:1.7}
+.err{font-size:12px;color:var(--bad);min-height:1.4em}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-width:0}
+.btn{border:1px solid var(--line);background:var(--panel);border-radius:10px;padding:12px 14px;font-weight:700;min-height:46px}
+.btn.pri{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn:disabled{opacity:.45;cursor:default}
+.cta{display:grid;gap:8px}
+.inl{display:flex;gap:8px}
+.inl input{flex:1;min-width:0}
+input[type=text],input:not([type]){border:1px solid var(--line);background:var(--bg);border-radius:9px;padding:11px 12px;width:100%;min-height:46px}
+label{display:block;font-size:12px;color:var(--muted);margin:8px 0 4px;font-weight:700}
+
+/* title */
+.brand{display:grid;gap:8px;padding-top:6px}
+.brand h1{font-family:var(--f-display);font-weight:800;font-size:31px;line-height:1.2;letter-spacing:.02em;text-wrap:balance}
+.lead{color:var(--muted);font-size:13px;max-width:36em}
+.strip{display:flex;gap:2px;height:10px;margin-top:6px}
+.strip i{flex:1;border-radius:2px}
+.legend{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:11px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.legend i{width:9px;height:9px;border-radius:2px;display:inline-block}
+.heroes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.hero{display:grid;gap:5px;text-align:left;padding:11px;border:2px solid var(--line);background:var(--panel);border-radius:12px;align-content:start;min-width:0}
+.hero.on{border-color:var(--c);box-shadow:0 0 0 2px color-mix(in srgb,var(--c) 30%,transparent)}
+.hero:disabled{opacity:.4}
+.hero .hn{display:grid}
+.hero .hn b{font-family:var(--f-display);font-size:17px;line-height:1.2}
+.hero .hn small{color:var(--muted);font-size:11px}
+.hero .hp{font-weight:700;font-size:12px;color:var(--c)}
+.hero .hb{font-size:11px;color:var(--muted);line-height:1.5}
+.hero .hh{font-size:11px;font-weight:700}
+.heroes.sm .hb{display:none}
+.tok{display:inline-grid;place-items:center;width:var(--s,24px);height:var(--s,24px);border-radius:50%;background:var(--c);color:var(--tok-ink);font-family:var(--f-display);font-weight:800;font-size:calc(var(--s,24px)*.52);line-height:1;flex:none;box-shadow:0 0 0 2px color-mix(in srgb,var(--c) 35%,var(--panel))}
+.flow{list-style:none;padding:0;display:grid;gap:8px}
+.flow li{display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.flow .n{font-family:var(--f-display);font-weight:800;font-size:22px;color:var(--accent);text-align:center}
+.flow b{display:block;font-size:14px}
+.flow span{font-size:12px;color:var(--muted)}
+details.card summary{font-weight:700;cursor:pointer;min-height:28px}
+details.card ul{padding-left:1.2em;margin-top:8px;display:grid;gap:5px;font-size:12.5px;color:var(--muted)}
+.code{font-family:var(--f-display);font-weight:800;font-size:44px;letter-spacing:.22em;text-align:center;padding:10px 0;background:var(--panel);border:1px dashed var(--line);border-radius:12px}
+.seats{list-style:none;padding:0;display:grid;gap:6px}
+.seats li{display:flex;align-items:center;gap:10px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+.seats li b{flex:1;min-width:0;overflow-wrap:anywhere}
+.chk{display:flex;align-items:center;gap:8px;margin:0;color:var(--ink);font-size:13px}
+.chk input{width:20px;height:20px;min-height:0}
+
+/* game */
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.menu{border:1px solid var(--line);background:var(--panel);border-radius:9px;padding:6px 12px;font-size:12px;font-weight:700;min-height:34px}
+.round{display:grid;gap:5px}
+.round .rt{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.round strong{font-family:var(--f-display);font-size:18px;font-weight:800}
+.bar{height:6px;border-radius:3px;background:var(--panel2);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent)}
+.turn{display:flex;align-items:center;gap:8px;font-weight:700}
+.players{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.pc{display:grid;grid-template-columns:auto 1fr;gap:2px 8px;align-items:center;background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--c);border-radius:10px;padding:8px 9px;min-width:0}
+.pc.on{outline:2px solid var(--c);outline-offset:1px}
+.pc .pi{display:grid;min-width:0}
+.pc .pi b{font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pc .pi small{font-size:10.5px;color:var(--muted)}
+.pc .pm{grid-column:1/-1;display:grid}
+.pc .pm strong{font-size:15px;font-variant-numeric:tabular-nums}
+.pc .pm small{font-size:10.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.gauge{position:relative;height:8px;border-radius:4px;margin:8px 0 4px;background:linear-gradient(90deg,var(--bad),var(--panel2) 40%,var(--panel2) 60%,var(--good))}
+.gauge i{position:absolute;top:-4px;width:4px;height:16px;border-radius:2px;background:var(--ink);transform:translateX(-50%)}
+.gl{display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;padding:3px 8px;border-radius:99px;border:1px solid var(--line);background:var(--bg);font-variant-numeric:tabular-nums}
+.chip i{width:8px;height:8px;border-radius:2px;background:var(--rg)}
+.chip.hot{border-color:var(--good);color:var(--good);font-weight:700}
+.sec-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:8px}
+.board{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:5px}
+.tile{position:relative;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:1px;min-width:0;aspect-ratio:1/1.12;padding:0 0 4px;border:1px solid var(--line);border-top:4px solid var(--reg);border-radius:7px;background:var(--panel);color:var(--ink);overflow:hidden}
+.tile .no{position:absolute;left:3px;top:1px;font-size:8.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.tile .nm{font-size:11.5px;line-height:1.2;white-space:nowrap}
+.tile .ow{display:flex;align-items:center;gap:3px;height:14px;font-size:9.5px;font-weight:700;color:var(--oc)}
+.tile .ow .dot{width:10px;height:10px;border-radius:50%;background:var(--oc)}
+.tile .here{position:absolute;right:2px;top:2px;display:flex;flex-wrap:wrap;gap:1px;justify-content:flex-end;max-width:34px}
+.tile.own{background:color-mix(in srgb,var(--oc) 15%,var(--panel));box-shadow:inset 0 -3px 0 var(--oc)}
+.tile.turn{border-color:var(--ink);box-shadow:0 0 0 2px var(--ink)}
+.tile.sel{outline:3px solid var(--accent);outline-offset:1px;z-index:1}
+.tile.start{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.tile.start .no{color:var(--accent-ink)}
+.tile.start small{font-size:8.5px;letter-spacing:.1em}
+.dtl{display:grid;gap:8px}
+.dtl .t{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.dtl h2{font-family:var(--f-display);font-weight:800;font-size:21px}
+.rtag{font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;color:var(--accent-ink);background:var(--reg)}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.facts div{background:var(--bg);border-radius:8px;padding:6px 9px;display:grid}
+.facts small{font-size:10.5px;color:var(--muted)}
+.facts b{font-variant-numeric:tabular-nums}
+.res{display:grid;gap:8px}
+.res .row3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.res .row3 div{background:var(--bg);border-radius:8px;padding:6px 9px;display:grid}
+.res small{font-size:10.5px;color:var(--muted)}
+.res b{font-variant-numeric:tabular-nums}
+.pos{color:var(--good)}.neg{color:var(--bad)}
+.log{max-height:230px;overflow:auto;display:grid;gap:0;font-size:12.5px}
+.log div{padding:6px 0;border-bottom:1px solid var(--line)}
+.log div:first-child{font-weight:700}
+.menu-panel{display:grid;gap:8px}
+.over h2{font-family:var(--f-display);font-size:22px;font-weight:800}
+.rank{list-style:none;padding:0;display:grid;gap:6px;margin-top:8px}
+.rank li{display:grid;grid-template-columns:26px auto 1fr;gap:8px;align-items:center;background:var(--bg);border-radius:10px;padding:8px 10px}
+.rank .rn{font-family:var(--f-display);font-weight:800;font-size:18px;text-align:center}
+.rank small{color:var(--muted);display:block;font-variant-numeric:tabular-nums}
+.rank li:first-child{outline:2px solid var(--accent)}
+
+/* dock */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--bg);border-top:1px solid var(--line);
+  padding:8px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.dock-in{max-width:560px;margin:0 auto;display:grid;gap:7px}
+.hint{font-size:12px;color:var(--muted);min-height:1.5em;line-height:1.5}
+.hint b{color:var(--ink)}
+.steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.hrow{display:flex;align-items:center;gap:10px}
+.hrow .hint{flex:1;min-width:0}
+.endb{flex:none;border:1px solid var(--line);background:var(--panel);border-radius:9px;padding:7px 12px;font-size:12px;font-weight:700;white-space:nowrap;min-height:38px}
+.endb.go{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.endb:disabled{opacity:.4;cursor:default}
+.sheet{position:fixed;inset:0;z-index:30;display:flex;align-items:flex-end;justify-content:center}
+.sheet-bg{position:absolute;inset:0;border:0;padding:0;border-radius:0;background:rgba(5,15,20,.55)}
+.sheet-in{position:relative;width:100%;max-width:560px;max-height:88%;overflow:auto;background:var(--bg);border:1px solid var(--line);border-bottom:0;border-radius:16px 16px 0 0;display:grid;gap:12px;align-content:start;
+  padding:14px max(16px,env(safe-area-inset-right,0px)) calc(18px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.sh-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.qty{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.qb{border:1px solid var(--line);background:var(--panel);border-radius:99px;padding:6px 14px;font-weight:700;min-height:38px}
+.qb[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.srow{background:var(--panel);border:1px solid var(--line);border-left:5px solid var(--rg);border-radius:10px;padding:9px 10px;display:grid;gap:6px;min-width:0}
+.srow .l1{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center}
+.srow .pr{display:grid;justify-items:end;font-variant-numeric:tabular-nums}
+.srow .pr strong{font-size:16px}
+.srow .pr small{font-size:11px;font-weight:700}
+.srow .tbs{display:flex;gap:6px}
+.tb{width:44px;min-height:44px;border-radius:9px;border:1px solid var(--line);background:var(--bg);font-weight:800}
+.tb.buy{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.srow .l2{display:flex;align-items:center;gap:10px;min-width:0}
+.srow .hd{display:grid;min-width:0;font-size:12.5px;font-variant-numeric:tabular-nums}
+.spark{flex:none}
+.pgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.pb{display:grid;justify-items:center;gap:0;border:1px solid var(--line);border-top:4px solid var(--rg);background:var(--panel);border-radius:9px;padding:6px 2px;min-height:54px}
+.pb small{font-size:10.5px;color:var(--muted)}
+.fxrow{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:4px 0 10px}
+.fxbig{display:grid;min-width:0}
+.fxbig strong{font-family:var(--f-display);font-size:26px;line-height:1.2;font-variant-numeric:tabular-nums}
+.fxbig small{font-size:11px;color:var(--muted)}
+.moonrow{display:flex;align-items:center;gap:12px}
+.moonrow svg{flex:none}
+.mtxt{display:grid;gap:1px;min-width:0;flex:1}
+.mtxt b{font-family:var(--f-display);font-size:18px;line-height:1.3}
+.mtxt span{font-size:12.5px}
+.arow{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px;display:grid;gap:6px;min-width:0}
+.arow.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.a1{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center}
+.pcs{display:grid;place-items:center;width:38px;height:38px;border-radius:9px;background:var(--ink);color:var(--bg);font-family:var(--f-display);font-weight:800;font-size:20px}
+.at{display:grid;min-width:0}
+.at b{font-family:var(--f-display);font-size:16px}
+.at small{font-size:10.5px;color:var(--muted);line-height:1.4}
+.lv{font-weight:800;font-variant-numeric:tabular-nums}
+.ae{font-size:12.5px;font-weight:700}
+.ab{display:flex;flex-wrap:wrap;gap:6px}
+.ab .btn{min-height:40px;padding:8px 12px;font-size:12.5px}
+.sb{display:grid;justify-items:center;align-content:center;gap:0;min-height:56px;padding:4px 2px;border:1px solid var(--line);background:var(--panel);border-radius:10px;min-width:0}
+.sb .g{font-size:11px;color:var(--muted);line-height:1.2}
+.sb .l{font-size:12px;font-weight:700;line-height:1.3;white-space:nowrap}
+.sb .s{font-size:10px;color:var(--muted);line-height:1.2;white-space:nowrap;font-variant-numeric:tabular-nums}
+.sb.go{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.sb.go .g,.sb.go .s{color:var(--accent-ink)}
+.sb.dim{opacity:.55}
+.sb.done{background:var(--panel2)}
+.sb.done .g{color:var(--good);font-weight:700}
+.sb:disabled{opacity:.4;cursor:default}
+.die{font-size:20px;line-height:1}
+@media (prefers-reduced-motion:no-preference){
+  .die.pop{animation:pop .45s ease-out}
+  @keyframes pop{0%{transform:rotate(-40deg) scale(.5)}60%{transform:rotate(12deg) scale(1.2)}100%{transform:none}}
+}
+@media (max-width:360px){.brand h1{font-size:26px}.tile .nm{font-size:10.5px}}
+.tile .cut{position:absolute;top:1px;right:2px;font-size:11px;font-weight:900;line-height:1;color:#fff;background:var(--bad);border-radius:5px;padding:1px 3px}
+.nkrow{display:flex;gap:8px;margin-top:6px}
+.nkrow input{flex:1;min-width:0}
+.cons{display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:6px;font-size:13px}
+.cons .cn{white-space:nowrap}
+.chain{margin:4px 0 0;padding-left:1.2em;font-size:13px}
+.secrow{display:grid;grid-template-columns:1fr auto;gap:4px 10px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}
+.secrow .l1{grid-column:1/-1;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.rbwrap{display:flex;flex-direction:column;gap:2px;min-width:0}
+.rb{display:block;height:10px;border-radius:99px;background:var(--line);overflow:hidden}
+.rb i{display:block;height:100%;background:var(--accent)}
+.secrow .tbs{display:flex;gap:6px}.secrow .tb{white-space:nowrap;padding-inline:10px;font-size:13px}
+.rev{font-size:11px;font-weight:700;color:#fff;background:var(--bad);border-radius:99px;padding:0 8px}
+</style>
+
+<div class="wrap">
+
+<section id="start" class="wrap" style="gap:14px">
+  <header class="brand">
+    <p class="eyebrow">OKINAWA BUSINESS ISLAND</p>
+    <h1>沖縄ビジネスアイランド</h1>
+    <p class="lead">沖縄県41市町村を巡る周回すごろく。琉球の武将を率いて店を出し、開発し、イベントで島の景気を動かそう。旧暦の祈りの日には、将棋の駒になぞらえた7人の祖霊がお力を貸してくれます。</p>
+    <div class="strip" id="strip" aria-hidden="true"></div>
+    <p class="legend" id="legend"></p>
+  </header>
+
+  <h2 class="h">武将を選ぶ</h2>
+  <div class="heroes" id="heroes"></div>
+
+  <div class="card">
+    <label for="fxbase" style="margin-top:0">為替の基準レート（円／ドル）</label>
+    <input id="fxbase" type="text" inputmode="decimal" autocomplete="off" value="150">
+    <p class="note">ゲーム開始時のレートです。実際のレートを入力して遊べます（80〜250）。初期値の150は仮の数字です。</p>
+    <p class="err" id="fxerr" role="status"></p>
+    <label for="nkbase">日経平均の開始値（手入力）</label>
+    <input id="nkbase" type="text" inputmode="numeric" autocomplete="off" value="40000">
+    <p class="note">ゲーム開始時の日経平均です。実際の値を入力して遊べます（5,000〜200,000）。初期値の40,000は仮の数字です。</p>
+    <p class="err" id="nkerr" role="status"></p>
+  </div>
+  <div class="cta">
+    <button class="btn pri" data-u="solo">ソロで始める（相手はAI 3名）</button>
+    <button class="btn" data-u="cont" id="btn-cont" hidden>続きから</button>
+  </div>
+
+  <h2 class="h">プレイの流れ</h2>
+  <ol class="flow">
+    <li><span class="n">①</span><div><b>サイコロを振る</b><span>沖縄のエリアを移動します。</span></div></li>
+    <li><span class="n">②</span><div><b>店舗を購入する</b><span>止まったエリアで店舗を購入します。</span></div></li>
+    <li><span class="n">③</span><div><b>地域開発をする</b><span>店舗を所有したエリアで開発投資を行います。</span></div></li>
+    <li><span class="n">④</span><div><b>イベントを開催する</b><span>イベントの収支と市場への影響を確認します。</span></div></li>
+    <li><span class="n">⑤</span><div><b>株取引・提携（戦略）</b><span>6地域の株を売買し、提携交渉で地域を押さえます。ライバルとの駆け引きの要です。</span></div></li>
+    <li><span class="n">⑥</span><div><b>祖霊をお招きする（旧暦の祈り）</b><span>旧暦1日・15日（大祈り）と8日・23日（小祈り）に、7人の祖霊から1体をお招きします。当番日に術を使え、加護が3日間続きます。</span></div></li>
+  </ol>
+
+  <details class="card">
+    <summary>ルールの詳細</summary>
+    <ul>
+      <li>全30ラウンド（旧暦のひと月）。終了時の資産（現金＋店舗の価値＋株）が最大の人が勝ちです。</li>
+      <li>盤面は首里城から始まる42マス。番号順に進み、首里城を通るたびに周回ボーナス300 G。</li>
+      <li>他の人の店に止まると通行料を支払います。</li>
+      <li>各ターンの終わりに、自分の店舗から収入があります。</li>
+      <li>同じ地域に店を増やすほど収入が伸びます（地域シナジー）。地域の全店舗を揃えると、さらに+25%。</li>
+      <li>開発は1エリア最大Lv3。通行料と収入が大きく伸びます。</li>
+      <li>イベントは景況を押し上げ、その地域が3ラウンド好調になります。</li>
+      <li>武将ごとの特技があり、ゆかりの地に止まると120 Gの声援を受けます。</li>
+      <li>地域株は6銘柄。自分の番に3回まで売買できます（手数料1%）。買うと値が上がり、売ると下がります。</li>
+      <li>ラウンドの終わりに株価は地域の実力（店舗の開発度・景況）へ戻りつつ揺れ、保有株に配当が出ます。</li>
+      <li>市場予報は次の値動きを先に教えます（的中率80%）。予報を読んで先回りしましょう。</li>
+      <li>10株以上を最も多く持つ人は筆頭株主。その地域で払われる通行料の10%を、店の持ち主から受け取ります。</li>
+      <li>提携交渉に成功すると3ラウンド、その地域の自店舗の収入と通行料が+15%になります。</li>
+      <li>収益は国内需要70%・海外需要30%で構成されます。海外分は為替に連動し、円安で増え、円高で減ります（感応度は2倍）。</li>
+      <li>為替はラウンドごとに動きます。変動の40%が次のラウンドの収益に、残りは30%ずつその後2ラウンドに反映されます。</li>
+      <li>為替予報は次の動きを先に教えます（的中率80%）。画面の切替で、金額を円とドルのどちらでも見られます。</li>
+      <li>1ラウンドは旧暦の1日です。旧暦1日（新月）と15日（満月）は大祈り、8日（上弦）と23日（下弦）は小祈りの日です。</li>
+      <li>祈りの日には、供物を捧げて7人の祖霊から1体をお招きできます（大祈り200 G、小祈り100 G、どちらも×次のレベル。最大Lv5）。同じ祖霊を重ねてお招きするとレベルが上がります。</li>
+      <li>祖霊は歩・香・桂・銀・金・角・飛の格に対応し、7日周期で当番日が回ります（1日が歩、2日が香、…7日が飛、8日が歩）。お招きした祖霊は、当番日に「術」（駒の動き）をサイコロの代わりに1回使え、当番日から3日間「癒し」の加護がはたらきます。</li>
+      <li>効果はレベルが上がるほど伸びが小さくなり、上限があります（リーマンのゼータ関数 ζ(s)=Σ1/nˢ の部分和を係数に使用）。</li>
+      <li>祖霊の設定は、沖縄の祖先崇拝（トートーメー）に着想を得た架空の創作です。実在の信仰や職能を示すものではありません。</li>
+      <li>ヤシガニ（ハッカー）は、独走する人の店をねらう暴落役です。襲撃されると、その店は2ラウンド収入と通行料がゼロになり、その地域・部門の国内流通が落ち込みます（予兆は的中率80%）。金（アジ）の加護で被害は半分になります。</li>
+      <li>地域株は食品・トラベル・アメニティの3部門で決まり、各部門に国内と海外（インバウンド・輸入）の比率があります。比率は150 Gで調整でき、1回につき売買枠を1つ使います。国内が下がり海外が上回るのが「インバウンド逆転」です。</li>
+      <li>投資信託は3部門＋日経ミニの4本。沖縄の動物や産物（ハブ・マングース・ヤンバルクイナなど）が「鎖」でつながり、1ラウンド遅れて値動きが波及します。日経平均は景況と連動し、手入力で実際の値も反映できます。</li>
+      <li>株価・為替・地域株はゲーム内の架空のもので、実在の企業価値や投資助言を示すものではありません。</li>
+    </ul>
+  </details>
+
+  <h2 class="h">オンライン対戦</h2>
+  <div class="card" id="online"><p class="note">接続を確認しています…</p></div>
+</section>
+
+<section id="lobby" class="wrap" style="gap:14px" hidden>
+  <p class="eyebrow">部屋コード</p>
+  <div class="code" id="lb-code">----</div>
+  <button class="btn" data-u="copy">コードをコピー</button>
+  <p class="note">友だちに、このゲームのURLとこのコードを伝えてください。友だちはURLを開いて、コードで入室します。ホストがこの画面を開いているあいだだけ遊べます。</p>
+  <h2 class="h">参加者</h2>
+  <ul class="seats" id="lb-seats"></ul>
+  <h2 class="h">あなたの武将</h2>
+  <div class="heroes sm" id="lb-heroes"></div>
+  <div id="lb-fxwrap"><label for="lb-fx">為替の基準レート（円／ドル・ホストが設定）</label><input id="lb-fx" type="text" inputmode="decimal" autocomplete="off" value="150"><label for="lb-nk">日経平均の開始値（ホストが設定）</label><input id="lb-nk" type="text" inputmode="numeric" autocomplete="off" value="40000"></div>
+  <label class="chk" id="lb-aiwrap"><input type="checkbox" id="lb-ai" checked> 空席をAIで埋める</label>
+  <div class="cta">
+    <button class="btn pri" data-u="ostart" id="lb-start">ゲーム開始</button>
+    <button class="btn" data-u="leave">退室してタイトルへ</button>
+  </div>
+  <p class="note" id="lb-wait"></p>
+  <p class="err" id="lb-err" role="status"></p>
+</section>
+
+<section id="game" class="wrap" style="gap:14px" hidden>
+  <div class="top">
+    <p class="eyebrow">OKINAWA BUSINESS ISLAND</p>
+    <button class="menu" data-u="menu">メニュー</button>
+  </div>
+  <div class="card menu-panel" id="menu" hidden>
+    <button class="btn" data-u="title" id="btn-title">タイトルへ戻る</button>
+    <p class="note" id="menu-note">ソロの進行は自動で保存されます。</p>
+  </div>
+
+  <div class="round">
+    <div class="rt"><strong id="g-round"></strong><span class="turn" id="g-turn"></span></div>
+    <div class="bar"><i id="g-bar" style="width:0%"></i></div>
+  </div>
+
+  <div class="players" id="players"></div>
+
+  <div class="card" id="moon"></div>
+
+  <div class="card">
+    <div class="sec-h"><h2 class="h">市場と地域</h2><span class="note" id="g-mk"></span></div>
+    <div class="gauge" id="g-gauge"><i style="left:50%"></i></div>
+    <div class="gl"><span>低調 ×0.80</span><span>好況 ×1.30</span></div>
+    <div class="chips" id="g-chips"></div>
+    <p class="note" id="g-fore" style="margin-top:8px"></p>
+  </div>
+
+  <div class="card" id="fxcard"></div>
+  <div class="card" id="ygcard"></div>
+
+  <div>
+    <div class="sec-h"><h2 class="h">琉球すごろく 41市町村</h2><span class="note">番号順に蛇行して進む</span></div>
+    <div class="board" id="board"></div>
+  </div>
+
+  <div class="card dtl" id="detail"></div>
+  <div class="card res" id="last" hidden></div>
+  <div class="card over" id="over" hidden></div>
+
+  <div class="card">
+    <h2 class="h" style="margin-bottom:6px">島の経済ニュース</h2>
+    <div class="log" id="log"></div>
+  </div>
+</section>
+
+</div>
+
+<div class="dock" id="dock" hidden>
+  <div class="dock-in">
+    <div class="hrow">
+      <p class="hint" id="hint" role="status" aria-live="polite"></p>
+      <button class="endb" id="ancb" data-a="anc">祖霊</button>
+      <button class="endb" id="endb" data-a="end">終了 ›</button>
+    </div>
+    <div class="steps" id="steps"></div>
+  </div>
+</div>
+
+<div class="sheet" id="sheet" hidden>
+  <button class="sheet-bg" data-u="sheetx" aria-label="閉じる"></button>
+  <div class="sheet-in" role="dialog" aria-modal="true" aria-labelledby="sh-title">
+    <div class="sh-top"><h2 class="h" id="sh-title">株取引・提携</h2><button class="menu" data-u="sheetx">閉じる</button></div>
+    <p class="hint" id="sh-msg" role="status"></p>
+    <div class="card" id="sh-fore"></div>
+    <div class="card" id="sh-yg"></div>
+    <div class="qty" id="sh-qty"></div>
+    <div id="sh-rows" style="display:grid;gap:8px"></div>
+    <div class="card" id="sh-pact"></div>
+    <div class="card" id="sh-fund"></div>
+    <div class="card" id="sh-sec"></div>
+  </div>
+</div>
+
+<div class="sheet" id="asheet" hidden>
+  <button class="sheet-bg" data-u="asheetx" aria-label="閉じる"></button>
+  <div class="sheet-in" role="dialog" aria-modal="true" aria-labelledby="as-title">
+    <div class="sh-top"><h2 class="h" id="as-title">祖霊をお招きする</h2><button class="menu" data-u="asheetx">閉じる</button></div>
+    <p class="hint" id="as-msg" role="status"></p>
+    <div class="card" id="as-info"></div>
+    <div id="as-rows" style="display:grid;gap:8px"></div>
+    <p class="note">祖霊の設定は、沖縄の祖先崇拝（トートーメー）に着想を得た架空の創作です。実在の信仰や職能を示すものではありません。</p>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- data ---------- */
+const REG={s:"南部",c:"中部",n:"北部",i:"離島",m:"宮古",y:"八重山"};
+const REGK=Object.keys(REG);
+// [正式名, 短縮名, 地域, 基準価格, 観光需要, 紹介]
+const T=[
+["首里城","首里城","-",0,1.2,"琉球王国の王城。通るたびに周回ボーナスを受け取れます。"],
+["那覇市","那覇","s",1000,1.2,"国際通り・首里城を抱える県都の商業中心。"],
+["豊見城市","豊見城","s",700,1.05,"瀬長島ウミカジテラスの夕景が人気。"],
+["糸満市","糸満","s",620,1.0,"平和祈念公園とハーレー、漁業の街。"],
+["八重瀬町","八重瀬","s",480,0.95,"八重瀬岳と南部の農業・住宅地。"],
+["南城市","南城","s",780,1.12,"斎場御嶽・玉泉洞・絶景カフェが揃う。"],
+["与那原町","与那原","s",520,0.98,"与那原大綱曳とマリーナの港町。"],
+["南風原町","南風原","s",520,0.97,"琉球絣と陸軍病院壕に残る歴史。"],
+["西原町","西原","s",500,0.97,"大学と海辺の公園がある住みよい町。"],
+["浦添市","浦添","c",820,1.08,"浦添城跡と大型商業の街。"],
+["宜野湾市","宜野湾","c",800,1.08,"普天満宮とコンベンションの拠点。"],
+["北中城村","北中城","c",560,1.0,"中城城跡を望む高台の村。"],
+["中城村","中城","c",520,0.98,"中城城跡と中城湾の眺め。"],
+["北谷町","北谷","c",900,1.15,"アメリカンビレッジとサンセットビーチ。"],
+["嘉手納町","嘉手納","c",500,0.95,"道の駅かでなの展望が名物。"],
+["読谷村","読谷","c",640,1.05,"やちむんの里・座喜味城跡・残波岬。"],
+["沖縄市","沖縄市","c",800,1.08,"コザの音楽とエイサーの街。"],
+["うるま市","うるま","c",760,1.06,"勝連城跡・海中道路・闘牛。"],
+["金武町","金武","n",520,0.98,"タコライス発祥の地。金武観音寺も。"],
+["宜野座村","宜野座","n",480,0.96,"プロ野球キャンプと漢那ビーチ。"],
+["恩納村","恩納","n",1100,1.22,"リゾートホテル群・青の洞窟・万座毛。"],
+["名護市","名護","n",720,1.05,"ヒカンザクラとパイン。北部の中心都市。"],
+["本部町","本部","n",950,1.18,"美ら海水族館と海洋博公園。"],
+["今帰仁村","今帰仁","n",620,1.05,"今帰仁城跡と古宇利島。"],
+["伊江村","伊江","n",430,0.93,"伊江島タッチューとユリ園。"],
+["大宜味村","大宜味","n",420,0.92,"シークヮーサーと長寿の村。"],
+["国頭村","国頭","n",450,0.95,"やんばるの森とヤンバルクイナ。"],
+["東村","東村","n",430,0.93,"パイナップル畑とマングローブ。"],
+["伊平屋村","伊平屋","n",380,0.9,"手つかずの海が残る北の離島。"],
+["伊是名村","伊是名","n",380,0.9,"尚円王ゆかりの島、伊是名城跡。"],
+["渡嘉敷村","渡嘉敷","i",760,1.12,"ケラマブルーと阿波連ビーチ。"],
+["座間味村","座間味","i",780,1.14,"ホエールウォッチングとダイビング。"],
+["久米島町","久米島","i",640,1.06,"はての浜と久米島紬。"],
+["粟国村","粟国","i",360,0.9,"粟国の塩と素朴な島時間。"],
+["渡名喜村","渡名喜","i",360,0.9,"赤瓦の集落が残る静かな島。"],
+["南大東村","南大東","i",400,0.92,"サトウキビ畑と星野洞。"],
+["北大東村","北大東","i",380,0.9,"燐鉱山遺跡と断崖の島。"],
+["宮古島市","宮古島","m",1050,1.22,"与那覇前浜・伊良部大橋・トライアスロン。"],
+["多良間村","多良間","m",380,0.9,"八月踊りが受け継がれる島。"],
+["石垣市","石垣","y",1100,1.25,"川平湾と石垣牛、八重山の玄関口。"],
+["竹富町","竹富","y",760,1.12,"水牛車と西表島の大自然。"],
+["与那国町","与那国","y",520,1.0,"日本最西端。与那国馬と海底地形。"]
+];
+const HEROES=[
+ {k:"尚巴志",m:"巴",role:"統一王",perk:"店舗購入 −10%",bio:"三山を統一し、琉球王国の礎を築いた王。"},
+ {k:"護佐丸",m:"護",role:"築城の名手",perk:"地域開発費 −25%",bio:"座喜味城と中城城を築いた名将。"},
+ {k:"阿麻和利",m:"阿",role:"交易の領主",perk:"イベント収益 +30%",bio:"勝連城主。海の交易で栄えたと伝わる。"},
+ {k:"鬼大城",m:"鬼",role:"猛将",perk:"通行料収入 +25%",bio:"勇猛で知られ、阿麻和利討伐で名を上げたと伝わる。"}
+];
+const HOME=[5,15,17,16];
+const NEWS=[
+ ["観光キャンペーンが始まり、国内客が増加",.05],["台風が接近し、出足が鈍る",-.06],
+ ["円安で海外からの来訪が増加",.04],["クルーズ船が寄港し、港町が賑わう",.03],
+ ["原材料費が上がり、利益を圧迫",-.03],["航空便の増便が決定",.04],
+ ["長雨で屋外観光が低調",-.04],["連休で県内の人出が増える",.03]
+];
+const regTotal={};T.forEach((t,i)=>{if(i)regTotal[t[2]]=(regTotal[t[2]]||0)+1});
+const FORE=[["観光フェアの開催が決定",1],["新規路線の就航が決定",1],["大型イベントの誘致が内定",1],["台風の接近が予想される",-1],["観光施設の改修で一時休業",-1],["原材料の価格高騰が見込まれる",-1]];
+const FXF=[["日米の金利差が拡大する見通し",1],["米国の景気指標が好調",1],["原油高で貿易赤字が拡大",1],["日銀の利上げ観測が強まる",-1],["地政学リスクで安全資産の円が買われる",-1],["米国の利下げ観測が強まる",-1]];
+const FXA=[.4,.3,.3],FXS=2;
+const SAVE="obi_save_v6",USDK="obi_usd",FXK="obi_fx",NICK="obi_nick",LASTROOM="obi_room";
+const DICE=["⚀","⚁","⚂","⚃","⚄","⚅"];
+// 七祖霊：[名, 駒, 代, 性, セフィラ, 意味, 元素, ゼータ指数s, 基礎効果%, 零点(虚部)]
+const ANC=[
+ {n:"サトゥヌシ",pc:"歩",g:1,sx:"男",sf:"マルクト",sj:"王国",el:"地",s:3,E:10,z:14.1347,j:"一歩前へ：出目に+1して進む"},
+ {n:"チクドゥン",pc:"香",g:2,sx:"男",sf:"イェソド",sj:"基礎",el:"水（月）",s:2.75,E:10,z:21.0220,j:"直進：出目の2倍を進む"},
+ {n:"ウェーカタ",pc:"桂",g:3,sx:"男",sf:"ホド",sj:"栄光",el:"風",s:2.5,E:10,z:25.0109,j:"跳躍：他社の店のマスを飛び越え、通行料なしで次のマスへ"},
+ {n:"ワカアジ",pc:"銀",g:4,sx:"男",sf:"ネツァク",sj:"勝利",el:"火",s:2.25,E:12,z:30.4249,j:"進退：出目の分、前進か後退を選ぶ"},
+ {n:"アジ",pc:"金",g:5,sx:"男",sf:"ティファレト",sj:"調和",el:"光",s:2,E:15,z:32.9351,j:"守り：動かずその場に留まる"},
+ {n:"ユタ",pc:"角",g:6,sx:"女",sf:"ゲブラー",sj:"峻厳",el:"浄火",s:1.75,E:20,z:37.5862,j:"一閃：6マス前か後ろへ跳ぶ"},
+ {n:"ヌール",pc:"飛",g:7,sx:"女",sf:"ヘセド",sj:"慈悲",el:"空",s:1.5,E:8,z:40.9187,j:"縦横無尽：同じ地域内の好きなマスへ"}
+];
+
+/* ---------- ヤシガニ・3部門・投資信託・日経 ---------- */
+const SEC={f:"食品",t:"トラベル",a:"アメニティ"},SECK=["f","t","a"];
+// 地域ごとの部門ウェイト w と、国内比率 d（初期値）。国内＋海外(インバウンド・輸入)＝100%
+const RP={
+ s:{w:{f:.30,t:.40,a:.30},d:{f:.70,t:.50,a:.70}},
+ c:{w:{f:.35,t:.25,a:.40},d:{f:.80,t:.60,a:.80}},
+ n:{w:{f:.35,t:.45,a:.20},d:{f:.70,t:.50,a:.60}},
+ i:{w:{f:.25,t:.55,a:.20},d:{f:.50,t:.35,a:.50}},
+ m:{w:{f:.20,t:.55,a:.25},d:{f:.45,t:.30,a:.50}},
+ y:{w:{f:.30,t:.50,a:.20},d:{f:.50,t:.30,a:.60}}
+};
+const CON=[
+ {id:"sk",n:"シークヮーサー",s:"f",d:.8},{id:"mz",n:"もずく",s:"f",d:.6},{id:"kt",n:"黒糖",s:"f",d:.9},{id:"ag",n:"アグー豚",s:"f",d:.9},
+ {id:"yk",n:"ヤンバルクイナ",s:"t",d:.4},{id:"ha",n:"ハブ",s:"t",d:.7},{id:"ma",n:"マングース",s:"t",d:.7},{id:"jb",n:"ジンベエザメ",s:"t",d:.3},
+ {id:"gt",n:"月桃",s:"a",d:.8},{id:"rg",n:"琉球ガラス",s:"a",d:.6},{id:"bn",n:"紅型",s:"a",d:.5},{id:"sl",n:"粟国の塩",s:"a",d:.8}
+];
+const CN=Object.fromEntries(CON.map(c=>[c.id,c]));
+// [元, 先, 係数]：元の前ラウンドの値動きが、先に（係数×0.8）で伝わる
+const LINK=[["ha","ma",.6],["ma","yk",-.5],["yk","ha",.2],["sk","gt",.3],["bn","rg",.4],["mz","jb",.3]];
+const FUNDS=[{id:"f",n:"島のめぐみファンド",sub:"食品",s:"f"},{id:"t",n:"やんばる・海ファンド",sub:"トラベル",s:"t"},{id:"a",n:"くらしの島ファンド",sub:"アメニティ",s:"a"},{id:"nk",n:"日経ミニ",sub:"日経平均に連動",s:null}];
+const NKK="obi_nk";
+const clampN=(v,a,b)=>Math.max(a,Math.min(b,v));
+function newWorld(nkv){
+  nkv=nkv||40000;
+  const cn={},cr={},rp={},fh={f:[100],t:[100],a:[100],nk:[100]};
+  CON.forEach(c=>{cn[c.id]=100;cr[c.id]=0});
+  REGK.forEach(k=>{rp[k]={d:Object.assign({},RP[k].d)}});
+  return {sec:{D:{f:1,t:1,a:1},F:{f:1,t:1,a:1},dD:{f:0,t:0,a:0},dF:{f:0,t:0,a:0}},rp,cn,cr,fh,
+    nk:{base:nkv,v:nkv,h:[nkv],d:0,mk:1,man:0},yg:{atk:0,pos:-1,next:null,last:null,d0:avgD(rp)}};
+}
+function avgD(rp){let s=0,w=0;REGK.forEach(k=>SECK.forEach(x=>{s+=RP[k].w[x]*rp[k].d[x];w+=RP[k].w[x]}));return s/w}
+const secF=(k,s)=>{const d=G.W.rp[k].d[s];return d*G.W.sec.D[s]+(1-d)*G.W.sec.F[s]};
+const regF=k=>SECK.reduce((a,s)=>a+RP[k].w[s]*secF(k,s),0);
+function fundNav(id){
+  const W=G.W;if(id==="nk")return 100*W.nk.v/W.nk.base;
+  const L=CON.filter(c=>c.s===id);return L.reduce((a,c)=>a+W.cn[c.id],0)/L.length;
+}
+const fundPx=id=>Math.max(1,Math.round(fundNav(id)));
+const fundVal=pi=>G.fsh?FUNDS.reduce((s,f)=>s+G.fsh[pi][f.id]*fundPx(f.id),0):0;
+function leadRatio(){
+  const v=G.players.map((p,i)=>net(i)).sort((a,b)=>b-a);
+  return v.length>1&&v[1]>0?v[0]/v[1]-1:0;
+}
+function secStep(){
+  const S=G.W.sec;
+  SECK.forEach(s=>{
+    ["D","F"].forEach(x=>{
+      const o=S[x][s];let v=o*(1+(Math.random()-.5)*.05)+(1-o)*.25;
+      if(x==="F"&&s==="t")v*=1+.4*(G.fx.d||0);
+      v=+clampN(v,.6,1.5).toFixed(4);S["d"+x][s]=v/o-1;S[x][s]=v;
+    });
+  });
+}
+function consStep(){
+  const W=G.W,prev=W.cr,nr={};
+  CON.forEach(c=>{
+    let r=(Math.random()-.5)*.05+c.d*W.sec.dD[c.s]+(1-c.d)*W.sec.dF[c.s]+.03*(1-W.cn[c.id]/100);
+    LINK.forEach(l=>{if(l[1]===c.id)r+=l[2]*(prev[l[0]]||0)*.8});
+    r=clampN(r,-.2,.2);nr[c.id]=r;W.cn[c.id]=+clampN(W.cn[c.id]*(1+r),20,400).toFixed(2);
+  });
+  W.cr=nr;
+  if(nr.ma<-.04)say("鎖：マングースが下落。防除が進み、ヤンバルクイナの回復が期待されます");
+  else if(nr.ma>.04)say("鎖：マングースが上昇。ヤンバルクイナに逆風が吹くかもしれません");
+  if(nr.ha>.05)say("鎖：ハブの人気が上昇。マングースへ波及しそうです");
+}
+function nkStep(){
+  const N=G.W.nk;let m=0;CON.forEach(c=>{m+=G.W.cr[c.id]});m/=CON.length;
+  const dm=G.market-N.mk;N.mk=G.market;
+  const ret=clampN(.6*m+.8*dm+(Math.random()-.5)*.016+.03*(1-N.v/N.base),-.08,.08);
+  N.v=Math.round(clampN(N.v*(1+ret),N.base*.5,N.base*2));N.d=ret;
+  G.market=clampN(+(G.market+.08*ret).toFixed(3),.8,1.3);
+  N.h.push(N.v);if(N.h.length>15)N.h.shift();
+  say("日経平均："+N.v.toLocaleString("ja-JP")+"（"+(ret>=0?"+":"−")+Math.abs(ret*100).toFixed(2)+"%）");
+}
+function aNkSet(v){
+  const N=G.W.nk;v=Math.round(+v);
+  if(!(v>=N.base*.5&&v<=N.base*2))return "開始時の日経（"+N.base.toLocaleString("ja-JP")+"）の半分〜2倍の数字を入力してください";
+  if(N.man===G.round)return "日経の手入力は1ラウンドに1回までです";
+  const r=clampN(v/N.v-1,-.12,.12);
+  N.man=G.round;N.d=v/N.v-1;N.v=v;
+  G.market=clampN(+(G.market+.3*r).toFixed(3),.8,1.3);
+  N.h.push(v);if(N.h.length>15)N.h.shift();
+  say("日経平均を手入力："+v.toLocaleString("ja-JP")+"（"+(N.d>=0?"+":"−")+Math.abs(N.d*100).toFixed(2)+"%）。景況が連動して動きます");
+  return "";
+}
+function ygPlan(){
+  const W=G.W,Y=W.yg,r=G.round;Y.next=null;
+  if(r<12)return;
+  const go=r===15||r===G.max||Math.random()<.06+Math.min(.35,leadRatio());
+  if(!go)return;
+  const lead=G.players.map((p,i)=>i).sort((a,b)=>net(b)-net(a))[0];
+  let own=ownedBy(lead);
+  if(!own.length||Math.random()<.4)own=G.tiles.map((t,i)=>i).filter(i=>i&&G.tiles[i].o>=0);
+  if(!own.length)own=[1+rnd(41)];
+  const pos=Math.random()<.6?own.slice().sort((a,b)=>value(b)-value(a))[0]:own[rnd(own.length)];
+  const k=T[pos][2];
+  const s=SECK.slice().sort((a,b)=>RP[k].w[b]*W.rp[k].d[b]-RP[k].w[a]*W.rp[k].d[a])[0];
+  Y.next={pos,s};
+  say("ヤシガニの予兆：次のラウンド終了時、"+REG[k]+"の"+SEC[s]+"部門に異変が起きそうです（的中率80%）");
+}
+function ygHit(pos,s){
+  const W=G.W,Y=W.yg,t=G.tiles[pos],k=T[pos][2],o=t.o;Y.atk++;
+  const shield=o>=0&&ancOn(o,4)>0,sev=shield?.5:1;
+  say("【ヤシガニ襲撃】"+REG[k]+"・"+T[pos][1]+"の"+SEC[s]+"の流通システムが、ハサミで遮断されました！");
+  if(o>=0){
+    if(shield)say(G.players[o].name+"は"+ANC[4].n+"の守りで被害を半分に抑え、店の遮断も免れました");
+    else{t.x=2;say(G.players[o].name+"の"+T[pos][1]+"の店は、2ラウンドのあいだ収入と通行料がゼロになります")}
+  }
+  W.sec.D[s]=+(W.sec.D[s]*(1-.16*sev)).toFixed(4);
+  W.sec.F[s]=+(W.sec.F[s]*(1+.05*sev)).toFixed(4);
+  const before=W.rp[k].d[s];
+  W.rp[k].d[s]=+Math.max(.2,before-.1*sev).toFixed(2);
+  if(before>=.5&&W.rp[k].d[s]<.5)say("インバウンド逆転：「"+REG[k]+"の"+SEC[s]+"」は、海外製品・来訪者の比率が国内を上回りました");
+  CON.forEach(c=>{if(c.s===s){const d=.10*c.d*sev;W.cn[c.id]=+Math.max(20,W.cn[c.id]*(1-d)).toFixed(2);W.cr[c.id]=(W.cr[c.id]||0)-d}});
+  W.nk.v=Math.round(W.nk.v*(1-.02*sev));
+  G.market=Math.max(.8,+(G.market-.03*sev).toFixed(3));
+  Y.pos=pos;Y.last={r:G.round,pos,s,k};
+  if(Y.atk===1)say("【ヤシガニ・ファイル】はじめてその姿が見えた。強いハサミで流通の「つなぎ目」だけを断つ、島のハッカーだ。");
+}
+function ygRun(){
+  const Y=G.W.yg,N=Y.next;
+  if(!N)return;
+  let pos=N.pos;
+  if(Math.random()>.8){const c=G.tiles.map((t,i)=>i).filter(i=>i&&T[i][2]!==T[pos][2]);pos=c[rnd(c.length)]}
+  Y.next=null;ygHit(pos,N.s);
+}
+const YG_CLUE={
+ 2:"島の歴史：1910年、ハブ退治のために放たれたマングースは、やがてヤンバルクイナを脅かした。投資信託の中でも、この「鎖」はつながっている。",
+ 3:"夜の浜辺に、とても大きなハサミの跡が見つかった。",
+ 7:"県内の流通サーバーが一瞬だけ止まった。ログには「YASHIGANI」とだけ残っていた。",
+ 11:"経済ニュースに予告状が届く。「島は外の品に頼りすぎている。つなぎ目を確かめさせてもらう」",
+ 20:"正体：ヤシガニは、島の流通が輸入や外資に偏りすぎないよう見張る番人。七人のご先祖さまと同じ、月の暦の夜に動いていた。"
+};
+function worldStep(final){
+  ygRun();
+  secStep();consStep();nkStep();
+  const W=G.W;
+  FUNDS.forEach(f=>{W.fh[f.id].push(fundNav(f.id));if(W.fh[f.id].length>15)W.fh[f.id].shift()});
+  if(!final){
+    if(YG_CLUE[G.round])say("【ヤシガニ・ファイル】"+YG_CLUE[G.round]);
+    ygPlan();
+  }
+}
+function aFund(id,q,dir){
+  if(G.flow.t>=3)return "今ターンの売買枠（3回）を使い切りました";
+  const p=cur(),pi=G.turn,px=fundPx(id),nm=FUNDS.find(f=>f.id===id).n;
+  if(dir>0){
+    const c=Math.round(px*q*1.01);
+    if(p.cash<c)return "資金が足りません（"+yen(c)+" 必要）";
+    p.cash-=c;G.fsh[pi][id]+=q;say(p.name+"が"+nm+"を"+q+"口購入（"+yen(c)+"）");
+  }else{
+    const n=Math.min(q,G.fsh[pi][id]);
+    if(n<=0)return nm+"を保有していません";
+    const r=Math.round(px*n*.99);
+    p.cash+=r;G.fsh[pi][id]-=n;say(p.name+"が"+nm+"を"+n+"口売却（"+yen(r)+"）");
+  }
+  G.flow.t++;return "";
+}
+function aTilt(k,s,dir){
+  if(G.flow.t>=3)return "今ターンの売買枠（3回）を使い切りました";
+  const p=cur(),c=150,d=G.W.rp[k].d[s],nd=+clampN(d+.1*dir,.2,.9).toFixed(2);
+  if(nd===d)return "これ以上は動かせません（国内比率は20〜90%）";
+  if(p.cash<c)return "資金が足りません（"+yen(c)+" 必要）";
+  p.cash-=c;G.W.rp[k].d[s]=nd;G.flow.sp+=c;G.flow.t++;
+  say(p.name+"が"+REG[k]+"の"+SEC[s]+"の構成を調整：国内 "+Math.round(d*100)+"% → "+Math.round(nd*100)+"%");
+  return "";
+}
+function aiFund(gi){
+  if(!G.fsh||G.flow.t>=3)return;
+  const W=G.W,p=cur();
+  FUNDS.forEach(f=>{
+    const n=G.fsh[gi][f.id];
+    if(n&&G.flow.t<3&&fundNav(f.id)<Math.max.apply(null,W.fh[f.id])*.9)aFund(f.id,Math.min(n,25),-1);
+  });
+  if(G.flow.t<3&&p.cash>2200&&Math.random()<.3){
+    const best=FUNDS.map(f=>{const h=W.fh[f.id];return {id:f.id,m:fundNav(f.id)/(h[h.length-2]||100)}}).sort((a,b)=>b.m-a.m)[0];
+    if(best.m>1)aFund(best.id,10,1);
+  }
+}
+/* ---------- ヤシガニ・投信・日経の表示 ---------- */
+const pcs=v=>(v>=0?"+":"−")+Math.abs(v*100).toFixed(1)+"%";
+function ygStatus(){
+  const Y=G.W.yg,N=Y.next;
+  if(N){const k=T[N.pos][2];return '<b class="neg">予兆あり</b>：次のラウンド終了時、'+REG[k]+'の'+SEC[N.s]+'部門が狙われそうです（的中率80%）';}
+  if(Y.last&&G.round-Y.last.r<=1)return '<b>襲撃直後</b>：'+REG[Y.last.k]+'・'+T[Y.last.pos][1]+'の'+SEC[Y.last.s]+'。遮断された店は2ラウンドお休みです';
+  if(G.round<12)return '<span class="note">まだ静かです。浜辺や通信に、ふしぎな予兆が…</span>';
+  return '<span class="note">いまは静かです。独走していると狙われやすくなります</span>';
+}
+function renderYg(){
+  const el=$("ygcard");if(!el||!G||!G.W)return;
+  const N=G.W.nk,Y=G.W.yg;
+  el.innerHTML='<div class="sec-h"><h2 class="h">ヤシガニ警戒情報・日経</h2><button class="menu" data-a="mk">投信・部門を開く</button></div>'
+    +'<p>'+ygStatus()+'</p>'
+    +'<div class="facts" style="grid-template-columns:repeat(3,1fr)"><div><small>日経平均</small><b>'+N.v.toLocaleString("ja-JP")+'</b></div>'
+    +'<div><small>前回比</small><b class="'+(N.d>=0?"pos":"neg")+'">'+pcs(N.d)+'</b></div>'
+    +'<div><small>襲撃 / 国内比率</small><b>'+Y.atk+'回 / '+Math.round(avgD(G.W.rp)*100)+'%</b></div></div>'
+    +'<div style="margin-top:6px">'+sparkSvg(N.h,120,26)+'</div>';
+}
+function renderSheetX(){
+  const W=G.W,viewer=CTX.me>=0?CTX.me:G.turn,my=isMyTurn(),host=CTX.mode==="solo"||CTX.host;
+  const keep=$("nkin")?$("nkin").value:"";
+  const N=W.nk;
+  $("sh-yg").innerHTML='<div class="sec-h"><h2 class="h">ヤシガニ警戒情報</h2><span class="note">島のハッカー・暴落役</span></div>'
+    +'<p>'+ygStatus()+'</p>'
+    +'<p class="note" style="margin-top:6px">ヤシガニは、いちばん資産の多い人の店をねらい、その地域・部門の国内流通を断ちます。遮断された店は2ラウンド収入と通行料がゼロ、国内比率の高い株や投信が下がり、そのぶん海外側が相対的に強くなります（インバウンド逆転）。'+ANC[4].n+'（金）の加護があると被害は半分で店は無事です。</p>'
+    +'<div class="sec-h" style="margin-top:10px"><h2 class="h">日経平均</h2><span class="note">'+N.v.toLocaleString("ja-JP")+'（'+pcs(N.d)+'）</span></div>'
+    +'<p class="note">日経はゲーム内の景況と連動します。実際の日経を手入力して反映もできます（'+(host?'1ラウンドに1回':'ホストのみ')+'）。</p>'
+    +(host?'<div class="nkrow"><input id="nkin" type="text" inputmode="numeric" autocomplete="off" placeholder="例 '+N.base.toLocaleString("ja-JP")+'" aria-label="日経平均の手入力"><button class="btn" data-u="nkset">反映</button></div>':'');
+  if($("nkin")&&keep)$("nkin").value=keep;
+  // 投資信託
+  const rows=FUNDS.map(f=>{
+    const nav=fundNav(f.id),h=W.fh[f.id],prev=h[h.length-1]||nav;
+    const px=fundPx(f.id),n=G.fsh[viewer>=0?viewer:0][f.id],ch=nav/prev-1;
+    let cons="";
+    if(f.s){
+      cons='<div class="cons">'+CON.filter(c=>c.s===f.s).map(c=>{
+        const r=W.cr[c.id]||0;
+        return '<span class="cn"><b>'+c.n+'</b> '+Math.round(W.cn[c.id])+' <small class="'+(r>=0?"pos":"neg")+'">'+(r>=0?"▲":"▼")+Math.abs(r*100).toFixed(1)+'%</small><small class="note"> 国内'+Math.round(c.d*100)+'%</small></span>';
+      }).join("")+'</div>';
+    }
+    return '<div class="srow" style="--rg:var(--accent)"><div class="l1"><div><b>'+f.n+'</b><br><small class="note">'+f.sub+'</small></div>'
+      +'<div class="pr"><strong>'+mu(px)+'</strong><small class="'+(ch>=0?"pos":"neg")+'">'+(ch>=0?"▲":"▼")+Math.abs(ch*100).toFixed(1)+'%</small></div>'
+      +'<div class="tbs"><button class="tb buy" data-ft="buy" data-fk="'+f.id+'" aria-label="'+f.n+'を買う">買</button><button class="tb" data-ft="sell" data-fk="'+f.id+'" aria-label="'+f.n+'を売る">売</button></div></div>'
+      +'<div class="l2">'+sparkSvg(h.concat([nav]))+'<div class="hd"><span>保有 <b>'+n+'口</b>（'+mu(n*px)+'）</span></div></div>'+cons+'</div>';
+  }).join("");
+  const chain=LINK.map(l=>{const a=CN[l[0]],b=CN[l[1]];return '<li>'+a.n+' ⇒ '+b.n+'：'+(l[2]>0?'同じ向きに':'逆向きに')+(Math.abs(l[2])>=.5?'強く':'弱く')+'つながる</li>'}).join("");
+  $("sh-fund").innerHTML='<div class="sec-h"><h2 class="h">投資信託</h2><span class="note">売買枠・手数料1%は株と共通</span></div>'
+    +'<p class="note" style="margin-bottom:8px">3部門ごとに、沖縄の動物や産物をまとめたファンドです。構成銘柄どうしは「鎖」でつながり、1ラウンド遅れて波及します。ヤシガニの襲撃では、国内比率の高い銘柄ほど下がります。</p>'
+    +'<div style="display:grid;gap:8px">'+rows+'</div><p class="note" style="margin-top:8px"><b>鎖のつながり</b></p><ul class="chain">'+chain+'</ul>';
+  // 3部門
+  const tk=ui.tk||"s",S=W.sec;
+  const bar=(d)=>'<span class="rb"><i style="width:'+Math.round(d*100)+'%"></i></span>';
+  $("sh-sec").innerHTML='<div class="sec-h"><h2 class="h">3部門の国内・海外比率</h2><span class="note">調整 '+mu(150)+'／売買枠1回</span></div>'
+    +'<p class="note" style="margin-bottom:8px">各地域の株価は、食品・トラベル・アメニティの3部門で決まります。部門ごとに「国内」と「海外（インバウンド・輸入）」の比率があり、国内流通指数と海外指数の動きが株価に反映されます。比率は調整できます。</p>'
+    +'<div class="chips">'+REGK.map(k=>'<button class="chip'+(k===tk?" hot":"")+'" data-tk="'+k+'" style="--rg:var(--rg-'+k+')" aria-pressed="'+(k===tk?"true":"false")+'"><i></i>'+REG[k]+'</button>').join("")+'</div>'
+    +SECK.map(s=>{
+      const d=W.rp[tk].d[s],rev=d<.5;
+      return '<div class="secrow"><div class="l1"><b>'+SEC[s]+'</b><small class="note"> 重み '+Math.round(RP[tk].w[s]*100)+'%</small>'+(rev?'<span class="rev">海外が優勢</span>':'')+'</div>'
+        +'<div class="rbwrap">'+bar(d)+'<small>国内 '+Math.round(d*100)+'% ／ 海外 '+Math.round((1-d)*100)+'%</small></div>'
+        +'<div class="tbs"><button class="tb" data-ti="'+tk+':'+s+':1">国内へ</button><button class="tb" data-ti="'+tk+':'+s+':-1">海外へ</button></div></div>';
+    }).join("")
+    +'<p class="note" style="margin-top:8px">全国の指数（国内流通 / 海外）：'+SECK.map(s=>SEC[s]+' '+S.D[s].toFixed(2)+' / '+S.F[s].toFixed(2)).join('、')+'</p>';
+}
+function ygReport(){
+  const Y=G.W.yg,a=avgD(G.W.rp),d0=Y.d0,yk=fundNav("t");
+  let end;
+  if(a>=d0+.05)end="島の国内の力が戻りました。流通のつなぎ目を守る人が増え、ヤシガニは静かにハサミを下ろします。";
+  else if(a<=d0-.05)end="島は外の力にたよる形になりました。ヤシガニはまた夜の浜辺にあらわれるでしょう。";
+  else end="国内と海外が、ほどよく釣り合いました。ヤシガニは見守るだけで、去っていきます。";
+  const yq=Math.round(G.W.cn.yk),mg=Math.round(G.W.cn.ma);
+  return '<div class="card" style="margin-top:10px"><h3 class="h">ヤシガニ・レポート</h3><div class="facts"><div><small>襲撃</small><b>'+Y.atk+'回</b></div><div><small>国内比率</small><b>'+Math.round(d0*100)+'% → '+Math.round(a*100)+'%</b></div><div><small>日経平均</small><b>'+G.W.nk.v.toLocaleString("ja-JP")+'</b></div></div>'
+    +'<p>'+end+'</p><p class="note">鎖のその後：ヤンバルクイナ指数 '+yq+'、マングース指数 '+mg+(yq>=mg?'。ヤンバルクイナが森を取りもどしました。':'。マングースの勢いが残っています。')+'</p></div>';
+}
+
+/* ---------- helpers ---------- */
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const yen=n=>Math.round(n).toLocaleString("ja-JP")+" G";
+const rnd=n=>Math.floor(Math.random()*n);
+const usdF=v=>{const a=Math.abs(v);return a<10?a.toFixed(2):a<100?a.toFixed(1):Math.round(a).toLocaleString("en-US")};
+const mu=n=>(ui.usd&&G&&G.fx)?(n<0?"−":"")+"US$"+usdF(n/G.fx.rate):yen(n);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
+const lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
+
+/* ---------- state ---------- */
+let G=null;
+let CTX={mode:"solo",me:0,code:null,host:false};
+const ui={screen:"start",hero:0,nick:"",sel:null,turnKey:"",msg:"",leaveArm:false,menu:false,sheet:false,qty:10,usd:false,asheet:false};
+let busy=false,aiBusy=false,runId=0,msgTimer=null;
+let DB=true,UID=null,CAN=true;
+const room={code:null,unsubs:[],seats:[],meta:null};
+
+function newFxf(){const f=FXF[rnd(FXF.length)];return {text:f[0],d:f[1],conf:.8}}
+function newFore(){const f=FORE[rnd(FORE.length)];return {k:REGK[rnd(REGK.length)],d:f[1],text:f[0],conf:.8}}
+function newGame(ps,base,nkv){
+  base=base||150;
+  const px={},hist={},pact={};
+  REGK.forEach(k=>{let s=0,n=0;T.forEach((t,i)=>{if(i&&t[2]===k){s+=t[3];n++}});px[k]=+(s/n/10).toFixed(2);hist[k]=[px[k]];pact[k]={o:-1,left:0}});
+  const f=newFore(),xf=newFxf();
+  return {ver:6,W:newWorld(nkv),fsh:ps.map(()=>({f:0,t:0,a:0,nk:0})),round:1,max:30,turn:0,market:1,buzz:{s:0,c:0,n:0,i:0,m:0,y:0},
+    players:ps.map(p=>({name:p.name,hero:p.hero,ai:!!p.ai,uid:p.uid||null,cash:3000,pos:0,laps:0})),
+    tiles:T.map(()=>({o:-1,l:0})),flow:{r:0,b:0,d:0,e:0,t:0,n:0,p:0,j:0,sp:0},an:ps.map(()=>[0,0,0,0,0,0,0]),dice:0,last:null,
+    px,hist,pact,fore:f,fx:{base,rate:base,d:0,eff:0,q:[0,0,0],hist:[base]},fxf:xf,sh:ps.map(()=>({s:0,c:0,n:0,i:0,m:0,y:0})),
+    log:["旧暦1日（新月）。大祈りの日です。祖霊をお招きできます。今日の当番は"+ANC[0].n+"（"+ANC[0].pc+"格）。","ゲーム開始。琉球の島々で商いを広げよう。","予報：次のラウンド終了時、"+REG[f.k]+"で"+f.text+"（的中率80%）","為替予報：次のラウンド終了時、"+xf.text+"（"+(xf.d>0?"円安":"円高")+"方向・的中率80%）"],over:false,rev:0,gameId:Date.now().toString(36)};
+}
+const cur=()=>G.players[G.turn];
+function ownedBy(pi){const a=[];G.tiles.forEach((t,i)=>{if(i&&t.o===pi)a.push(i)});return a}
+function syn(pi,reg){let n=0;G.tiles.forEach((t,i)=>{if(i&&t.o===pi&&T[i][2]===reg)n++});
+  return 1+Math.min(.4,.05*Math.max(0,n-1))+(n===regTotal[reg]?.25:0)}
+function pactM(i){const pc=G.pact[T[i][2]],t=G.tiles[i];return pc&&pc.left>0&&t.o>=0&&pc.o===t.o?1.15:1}
+const fxm=()=>1+.3*FXS*G.fx.eff;
+function mult(i){
+  const o=G.tiles[i].o,w=o>=0?ancOn(o,5):0;
+  let mk=G.market;if(mk<1)mk=1-(1-mk)*(1-w);
+  let f=fxm();if(f<1)f=1-(1-f)*(1-w);
+  return mk*(G.buzz[T[i][2]]>0?1.1:1)*pactM(i)*f;
+}
+const clampPx=v=>Math.max(15,Math.min(400,+v.toFixed(2)));
+const pxr=k=>Math.round(G.px[k]);
+function fund(k){let s=0,n=0;T.forEach((t,i)=>{if(i&&t[2]===k){s+=t[3]*(1+.4*G.tiles[i].l);n++}});return s/n/10*G.market*(G.buzz[k]>0?1.08:1)*regF(k)}
+const stockVal=pi=>REGK.reduce((s,k)=>s+G.sh[pi][k]*pxr(k),0);
+function topHolder(k){let best=-1,bn=9,tie=false;G.sh.forEach((s,pi)=>{const n=s[k];if(n>bn){best=pi;bn=n;tie=false}else if(n===bn&&best>=0)tie=true});return tie?-1:best}
+function pactChance(k,pi){let m=0;G.tiles.forEach((t,i)=>{if(i&&t.o===pi&&T[i][2]===k)m++});return Math.min(.9,.5+Math.min(.3,.1*m)+(topHolder(k)===pi?.1:0)+(G.market>1.1?.05:0)+ancOn(pi,2))}
+const buyCost=(i,pi)=>Math.round(T[i][3]*G.market*(G.players[pi].hero===0?.9:1));
+const devCost=(i,pi)=>Math.round(T[i][3]*.5*(1+.35*G.tiles[i].l)*(G.players[pi].hero===1?.75:1));
+function toll(i){const t=G.tiles[i];if(t.o<0||t.x>0)return 0;const o=G.players[t.o];
+  return Math.round(T[i][3]*.16*(1+.7*t.l)*T[i][4]*mult(i)*syn(t.o,T[i][2])*(o.hero===3?1.25:1))}
+function income(i){const t=G.tiles[i];if(t.x>0)return 0;return Math.round(T[i][3]*.05*(1+.5*t.l)*T[i][4]*mult(i)*syn(t.o,T[i][2])*(1+incBonus(t.o)))}
+const value=i=>Math.round(T[i][3]*G.market*(1+.55*G.tiles[i].l));
+const net=pi=>G.players[pi].cash+ownedBy(pi).reduce((s,i)=>s+value(i),0)+stockVal(pi)+fundVal(pi);
+function say(t){G.log.unshift("R"+G.round+"｜"+t);if(G.log.length>40)G.log.length=40}
+const isMyTurn=()=>!!G&&!G.over&&CTX.me>=0&&G.turn===CTX.me&&!cur().ai;
+const runner=()=>CTX.mode==="solo"||CTX.host;
+
+/* ---------- calendar & ancestors ---------- */
+const NT=42;
+const dutyK=()=>(G.round-1)%7;
+const prayKind=()=>{const d=G.round;return (d===1||d===15)?2:(d===8||d===23)?1:0};
+const moonName=d=>d===1?"新月":d===8?"上弦":d===15?"満月":d===23?"下弦":d===30?"晦日":"";
+const winOn=k=>((dutyK()-k+7)%7)<3;
+const zsum=(s,L)=>{let t=0;for(let n=1;n<=L;n++)t+=Math.pow(n,-s);return t};
+const ancE=(k,L)=>ANC[k].E*zsum(ANC[k].s,L)/100;
+function ancOn(pi,k){const L=G.an[pi][k];return (L>0&&winOn(k))?ancE(k,L):0}
+function incBonus(o){let b=ancOn(o,0)+ancOn(o,6);G.players.forEach((q,qi)=>{if(qi!==o)b+=ancOn(qi,6)/2});return b}
+const prayCost=(pi,k)=>(prayKind()===2?200:100)*(G.an[pi][k]+1);
+function dayNote(){
+  const d=G.round,pk=prayKind(),A=ANC[dutyK()],nm=moonName(d);
+  say("旧暦"+d+"日"+(nm?"（"+nm+"）":"")+"。"+(pk===2?"大祈りの日です。":pk===1?"小祈りの日です。":"")+(pk?"祖霊をお招きできます。":"")+"今日の当番は"+A.n+"（"+A.pc+"格）。");
+}
+
+/* ---------- game actions (mutate G, return error text or "") ---------- */
+function stepBy(p,n){
+  let np=p.pos+n;
+  if(np>=NT){np-=NT;p.laps++;p.cash+=300;say(p.name+"が首里城を通過。周回ボーナス 300 G")}
+  else if(np<0)np+=NT;
+  p.pos=np;
+}
+function landOn(p,pi){
+  const np=p.pos;
+  if(np<=0)return;
+  const t=G.tiles[np];
+  if(t.o>=0&&t.o!==pi){
+    const ds=ancOn(pi,4);
+    const tl=Math.min(p.cash,Math.round(toll(np)*(1-ds)));
+    p.cash-=tl;G.flow.sp+=tl;
+    const th=topHolder(T[np][2]);let sk=0;
+    if(th>=0&&th!==t.o){sk=Math.round(tl*.1);G.players[th].cash+=sk}
+    G.players[t.o].cash+=tl-sk;
+    say(T[np][1]+"は"+G.players[t.o].name+"の店。通行料 "+yen(tl)+(sk?"（うち"+yen(sk)+"は筆頭株主"+G.players[th].name+"へ）":"")+(ds>0?"（"+ANC[4].n+"の加護で軽減）":""));
+  }
+  if(HOME[p.hero]===np){p.cash+=120;say(HEROES[p.hero].k+"ゆかりの地。声援で +120 G")}
+}
+function aRoll(jp){
+  if(G.flow.r)return "すでにサイコロを振りました";
+  const p=cur(),pi=G.turn;
+  let k=-1,d=1+rnd(6);const dice=d;
+  if(jp){
+    k=dutyK();
+    if(!(G.an[pi][k]>0))return "今日の当番の祖霊は、まだお招きしていません";
+    if(G.flow.j)return "今日の術は使用済みです";
+    if((k===3||k===5)&&!(jp.dir===1||jp.dir===-1))return "向きを選んでください";
+    if(k===6){
+      const reg=p.pos===0?"s":T[p.pos][2],to=jp.to;
+      if(!(to>0&&to<NT&&T[to][2]===reg))return "同じ地域のマスを選んでください";
+    }
+    G.flow.j=1;
+  }
+  G.flow.r=1;
+  let txt;
+  if(k<0){stepBy(p,d);txt="サイコロ "+d}
+  else{
+    const A=ANC[k];
+    if(k===0){d=dice+1;stepBy(p,d);txt=A.n+"の一歩。サイコロ"+dice+"＋1"}
+    else if(k===1){d=dice*2;stepBy(p,d);txt=A.n+"の直進。サイコロ"+dice+"の2倍"}
+    else if(k===2){stepBy(p,d);txt=A.n+"の跳躍。サイコロ "+d}
+    else if(k===3){stepBy(p,jp.dir*d);txt=A.n+"の進退。サイコロ"+d+"で"+(jp.dir>0?"前進":"後退")}
+    else if(k===4){d=0;txt=A.n+"の守り。その場に留まる"}
+    else if(k===5){d=0;stepBy(p,6*jp.dir);txt=A.n+"の一閃。"+(jp.dir>0?"6マス前へ":"6マス後ろへ")}
+    else{d=0;p.pos=jp.to;txt=A.n+"の縦横無尽で移動"}
+  }
+  G.dice=d;
+  say(p.name+"："+txt+" → "+T[p.pos][0]);
+  if(k===4)return "";
+  if(k===2&&p.pos>0&&G.tiles[p.pos].o>=0&&G.tiles[p.pos].o!==pi){
+    stepBy(p,1);say(p.name+"は"+ANC[2].n+"の力で他社の店を飛び越え、"+T[p.pos][0]+"へ着地");
+  }
+  landOn(p,pi);
+  return "";
+}
+function aPray(k){
+  const pk=prayKind(),pi=G.turn,p=cur();
+  if(!pk)return "今日は祈りの日ではありません（旧暦1日・15日が大祈り、8日・23日が小祈り）";
+  if(G.flow.p)return "今日のお招きは済んでいます";
+  const L=G.an[pi][k];
+  if(L>=5)return ANC[k].n+"は最大のレベルです";
+  const c=prayCost(pi,k);
+  if(p.cash<c)return "供物が足りません（"+yen(c)+" 必要）";
+  p.cash-=c;G.an[pi][k]=L+1;G.flow.p=1;
+  say(p.name+"が"+(pk===2?"大祈り":"小祈り")+"で"+ANC[k].n+"（"+ANC[k].pc+"格）をお招き（Lv"+(L+1)+"、供物 "+yen(c)+"）");
+  return "";
+}
+function aBuy(){
+  const p=cur(),i=p.pos;
+  if(!G.flow.r)return "先にサイコロを振りましょう";
+  if(G.flow.b)return "このターンは購入済みです";
+  if(i===0)return "首里城には出店できません";
+  if(G.tiles[i].o>=0)return G.tiles[i].o===G.turn?"すでに自社の店舗です":"他社の店舗があります";
+  const c=buyCost(i,G.turn);if(p.cash<c)return "資金が足りません（"+yen(c)+" 必要）";
+  p.cash-=c;G.tiles[i]={o:G.turn,l:0};G.flow.b=1;G.flow.sp+=c;
+  say(p.name+"が"+T[i][0]+"に出店（"+yen(c)+"）");return "";
+}
+function aDev(i){
+  const p=cur();
+  if(!G.flow.r)return "先にサイコロを振りましょう";
+  if(G.flow.d)return "このターンは開発済みです";
+  if(!(i>0)||G.tiles[i].o!==G.turn)return "自社の店舗があるエリアを盤面から選んでください";
+  if(G.tiles[i].l>=3)return "このエリアは開発が最大です";
+  const c=devCost(i,G.turn);if(p.cash<c)return "資金が足りません（"+yen(c)+" 必要）";
+  p.cash-=c;G.tiles[i].l++;G.flow.d=1;G.flow.sp+=c;
+  say(p.name+"が"+T[i][0]+"を開発（Lv"+G.tiles[i].l+"、"+yen(c)+"）");return "";
+}
+function aEvent(i){
+  const p=cur();
+  if(!G.flow.r)return "先にサイコロを振りましょう";
+  if(G.flow.e)return "このターンは開催済みです";
+  const cost=450;if(p.cash<cost)return "資金が足りません（"+yen(cost)+" 必要）";
+  const own=i>0&&G.tiles[i].o===G.turn;
+  let rev=(260+rnd(431))*T[i][4];if(own)rev*=1.15;if(p.hero===2)rev*=1.3;
+  rev=Math.round(rev*G.market*(1+ancOn(G.turn,3)));
+  const m0=G.market,dm=.015+(rev>600?.01:0);
+  G.market=Math.min(1.3,+(G.market+dm).toFixed(3));
+  const reg=T[i][2];if(G.buzz[reg]!==undefined)G.buzz[reg]=3;
+  p.cash+=rev-cost;G.flow.e=1;G.flow.sp+=cost;
+  G.last={r:G.round,who:G.turn,i,rev,cost,m0,m1:G.market,reg};
+  say(p.name+"が"+T[i][0]+"でイベント開催。収支 "+(rev-cost>=0?"+":"")+yen(rev-cost));
+  return "";
+}
+function aTrade(k,q,dir){
+  if(G.flow.t>=3)return "今ターンの売買枠（3回）を使い切りました";
+  const p=cur(),pi=G.turn,px=pxr(k);
+  if(dir>0){
+    const c=Math.round(px*q*1.01);
+    if(p.cash<c)return "資金が足りません（"+yen(c)+" 必要）";
+    p.cash-=c;G.sh[pi][k]+=q;G.px[k]=clampPx(G.px[k]*(1+Math.min(.25,.004*q)));
+    say(p.name+"が"+REG[k]+"株を"+q+"株購入（"+yen(c)+"）");
+  }else{
+    const n=Math.min(q,G.sh[pi][k]);
+    if(n<=0)return REG[k]+"株を保有していません";
+    const r=Math.round(px*n*.99);
+    p.cash+=r;G.sh[pi][k]-=n;G.px[k]=clampPx(G.px[k]*(1-Math.min(.25,.004*n)));
+    say(p.name+"が"+REG[k]+"株を"+n+"株売却（"+yen(r)+"）");
+  }
+  G.flow.t++;return "";
+}
+function aPact(k){
+  const p=cur(),pi=G.turn,P=G.pact[k];
+  if(G.flow.n)return "このターンは交渉済みです";
+  if(P.left>0)return P.o===pi?"すでに提携中です":"他社が提携中です。期間が終わるまで待ちましょう";
+  if(p.cash<300)return "資金が足りません（300 G 必要）";
+  const ch=pactChance(k,pi);
+  p.cash-=300;G.flow.n=1;G.flow.sp+=300;
+  if(Math.random()<ch){
+    G.pact[k]={o:pi,left:3};G.px[k]=clampPx(G.px[k]*1.03);
+    say(p.name+"が"+REG[k]+"で提携に成功。3ラウンド、店舗収入と通行料 +15%");
+  }else say(p.name+"の"+REG[k]+"での提携交渉は不成立（300 G は戻りません）");
+  return "";
+}
+function aEnd(){
+  if(!G.flow.r)return "先にサイコロを振りましょう";
+  const p=cur();let inc=0;ownedBy(G.turn).forEach(i=>{inc+=income(i)});
+  p.cash+=inc;if(inc)say(p.name+"：店舗収入 "+yen(inc));
+  const rf=Math.round(G.flow.sp*ancOn(G.turn,1));
+  if(rf>0){p.cash+=rf;say(p.name+"："+ANC[1].n+"の加護で、支出の一部 "+yen(rf)+" が戻りました")}
+  G.flow={r:0,b:0,d:0,e:0,t:0,n:0,p:0,j:0,sp:0};G.turn=(G.turn+1)%G.players.length;
+  if(G.turn===0)roundEnd();
+  return "";
+}
+function settle(){
+  const F=G.fore,hit=!!F&&Math.random()<F.conf;
+  REGK.forEach(k=>{
+    let p=G.px[k];p+=(fund(k)-p)*.35;p*=1+(Math.random()-.5)*.14;
+    if(hit&&F.k===k)p*=1+F.d*.12;
+    G.px[k]=clampPx(p);
+  });
+  if(F)say(hit?"予報が的中："+REG[F.k]+"で"+F.text+"（株価"+(F.d>0?"上昇":"下落")+"）":"予報は外れ："+REG[F.k]+"の「"+F.text+"」は見送りに");
+  const parts=[];
+  G.players.forEach((p,pi)=>{
+    let d=0;
+    REGK.forEach(k=>{const n=G.sh[pi][k];if(n)d+=n*Math.max(1,Math.round(pxr(k)*.025*G.market*(G.buzz[k]>0?1.5:1)))});
+    if(d){p.cash+=d;parts.push(p.name+" +"+yen(d))}
+  });
+  if(parts.length)say("配当："+parts.join("／"));
+  REGK.forEach(k=>{G.hist[k].push(G.px[k]);if(G.hist[k].length>14)G.hist[k].shift()});
+}
+function fxStep(force){
+  const X=G.fx,F=G.fxf,hit=!!F&&Math.random()<F.conf,r0=X.rate;
+  let d;
+  if(force!==undefined)d=force;
+  else{d=(Math.random()-.5)*.03;if(hit)d+=F.d*.045;d-=(r0/X.base-1)*.08;d=Math.max(-.08,Math.min(.08,d))}
+  X.rate=+(Math.max(X.base*.7,Math.min(X.base*1.4,r0*(1+d)))).toFixed(2);
+  d=X.rate/r0-1;X.d=d;
+  FXA.forEach((a,k)=>{X.q[k]+=a*d});
+  X.eff=Math.max(-.35,Math.min(.35,X.eff+X.q.shift()));X.q.push(0);
+  X.hist.push(X.rate);if(X.hist.length>15)X.hist.shift();
+  say("為替："+(d>=0?"円安":"円高")+"（¥"+r0.toFixed(1)+" → ¥"+X.rate.toFixed(1)+"、"+(d>=0?"+":"−")+Math.abs(d*100).toFixed(1)+"%）。変動の40%が次のラウンドの収益に反映されます");
+  if(F&&force===undefined)say(hit?"為替予報が的中："+F.text:"為替予報は外れ："+F.text+"の影響は限定的");
+}
+function roundEnd(){
+  G.tiles.forEach(t=>{if(t.x>0)t.x--});
+  REGK.forEach(k=>{if(G.buzz[k]>0)G.buzz[k]--;if(G.pact[k].left>0)G.pact[k].left--});
+  if(G.round>=G.max){worldStep(true);settle();G.fore=null;G.over=true;say("全ラウンド終了。結果発表！");return}
+  G.round++;
+  const n=NEWS[rnd(NEWS.length)];
+  G.market=Math.max(.8,Math.min(1.3,+(G.market+n[1]+(1-G.market)*.15).toFixed(3)));
+  say("ニュース："+n[0]+"（景況 "+(n[1]>=0?"+":"")+Math.round(n[1]*100)+"%）");
+  worldStep(false);settle();
+  fxStep();G.fxf=newFxf();
+  G.fore=newFore();
+  say("予報：次のラウンド終了時、"+REG[G.fore.k]+"で"+G.fore.text+"（的中率80%）");
+  say("為替予報：次のラウンド終了時、"+G.fxf.text+"（"+(G.fxf.d>0?"円安":"円高")+"方向・的中率80%）");
+  dayNote();
+}
+
+/* ---------- AI ---------- */
+function aiTrade(gi){
+  const p=cur(),F=G.fore;
+  for(const k of REGK){
+    if(G.flow.t>=3)break;
+    const n=G.sh[gi][k];if(!n)continue;
+    const over=G.px[k]/fund(k)-1;
+    if((F&&F.k===k&&F.d<0&&Math.random()<.8)||over>.15)aTrade(k,Math.min(n,25),-1);
+  }
+  const cand=REGK.map(k=>({k,s:fund(k)/G.px[k]-1+(F&&F.k===k?F.d*.07:0)})).sort((a,b)=>b.s-a.s)[0];
+  if(G.flow.t<3&&cand.s>.04&&p.cash>pxr(cand.k)*10+700)aTrade(cand.k,p.cash>2500?25:10,1);
+}
+function aiPray(gi){
+  const pk=prayKind();if(!pk||G.flow.p)return;
+  const p=cur(),mn=Math.min.apply(null,G.an[gi]),c=[];
+  G.an[gi].forEach((L,k)=>{if(L<=mn+1&&L<4&&p.cash>=prayCost(gi,k)+600)c.push(k)});
+  if(c.length&&Math.random()<.85)aPray(c[rnd(c.length)]);
+}
+function aiJutsu(gi){
+  if(G.flow.j||G.flow.r)return false;
+  const k=dutyK(),L=G.an[gi][k];if(!(L>0))return false;
+  const p=cur();let jp=null;
+  const score=pos=>{const t=G.tiles[pos];if(pos===0)return 0;if(t.o<0)return p.cash>=buyCost(pos,gi)+300?2:0;return t.o===gi?1:-1};
+  if(k<=2){if(Math.random()<.7)jp={}}
+  else if(k===3){jp={dir:1}}
+  else if(k===4){if(Math.random()<.2)jp={}}
+  else if(k===5){const sf=score((p.pos+6)%NT),sb=score((p.pos+NT-6)%NT);if(Math.max(sf,sb)>0)jp={dir:sf>=sb?1:-1}}
+  else{
+    const reg=p.pos===0?"s":T[p.pos][2],c=[];
+    T.forEach((t,i)=>{if(i&&t[2]===reg&&i!==p.pos&&G.tiles[i].o<0&&p.cash>=buyCost(i,gi)+300)c.push(i)});
+    if(c.length)jp={to:c[rnd(c.length)]};
+  }
+  if(!jp)return false;
+  return aRoll(jp)==="";
+}
+async function aiTurn(rid){
+  const nap=async ms=>{await sleep(ms);if(rid!==runId)throw new Error("abort")};
+  const gi=G.turn,p=cur();
+  await nap(700);aiPray(gi);render();if(!aiJutsu(gi))aRoll();render();await nap(800);
+  aiTrade(gi);aiFund(gi);render();await nap(500);
+  if(p.cash>1500&&Math.random()<.25){
+    const top=REGK.map(k=>[k,ownedBy(gi).filter(x=>T[x][2]===k).length]).sort((a,b)=>b[1]-a[1])[0];
+    aPact(top[0]);render();await nap(500);
+  }
+  const i=p.pos;
+  if(i>0&&G.tiles[i].o<0&&p.cash>=buyCost(i,gi)+350&&Math.random()<.8){aBuy();render();await nap(600)}
+  if(Math.random()<.6){
+    const c=ownedBy(gi).filter(k=>G.tiles[k].l<3&&p.cash>=devCost(k,gi)+500).sort((a,b)=>devCost(a,gi)-devCost(b,gi))[0];
+    if(c){aDev(c);render();await nap(600)}
+  }
+  if(p.cash>=1200&&Math.random()<.4){
+    const mine=ownedBy(gi);aEvent(mine.length?mine[rnd(mine.length)]:(i||1));render();await nap(600)
+  }
+  aEnd();
+}
+async function pump(){
+  if(aiBusy||!G||G.over||!cur().ai||!runner())return;
+  aiBusy=true;const rid=runId;
+  try{
+    while(G&&!G.over&&cur().ai&&runner()&&rid===runId){
+      await aiTurn(rid);
+      await persist();render();
+    }
+  }catch(e){}
+  finally{aiBusy=false}
+}
+
+/* ---------- persistence ---------- */
+async function persist(){
+  if(!G)return;
+  if(CTX.mode==="solo"){lsSet(SAVE,JSON.stringify({G}));return}
+  G.rev=(G.rev||0)+1;
+  netState();
+}
+async function act(fn,arg){
+  if(busy||!isMyTurn())return;
+  const e=fn(arg);
+  if(e){msg(e);return}
+  msg("");busy=true;render();
+  try{await persist()}
+  catch(er){
+    msg("通信に失敗しました。もう一度お試しください。");
+    netSync();
+  }
+  busy=false;render();pump();
+}
+function msg(t){
+  ui.msg=t;renderHint();if(ui.sheet)renderSheet();if(ui.asheet)renderAnc();
+  if(msgTimer)clearTimeout(msgTimer);
+  if(t)msgTimer=setTimeout(()=>{ui.msg="";renderHint();if(ui.sheet)renderSheet();if(ui.asheet)renderAnc()},4200);
+}
+
+/* ---------- rendering ---------- */
+const tok=(h,sz)=>'<span class="tok" style="--c:var(--p'+h+');--s:'+(sz||24)+'px">'+HEROES[h].m+'</span>';
+function show(v){
+  ui.screen=v;
+  ["start","lobby","game"].forEach(k=>{$(k).hidden=k!==v});
+  $("dock").hidden=v!=="game";
+  if(v==="game")render();
+  try{window.scrollTo(0,0)}catch(e){}
+}
+function heroCard(h,sel,dis){
+  const H=HEROES[h];
+  return '<button class="hero'+(sel?" on":"")+'" data-hero="'+h+'"'+(dis?" disabled":"")+' aria-pressed="'+(sel?"true":"false")+'" style="--c:var(--p'+h+')">'
+    +tok(h,44)+'<span class="hn"><b>'+H.k+'</b><small>'+H.role+'</small></span>'
+    +'<span class="hp">'+H.perk+'</span><span class="hb">'+H.bio+'</span>'
+    +'<span class="hh">ゆかり：'+T[HOME[h]][0]+'</span></button>';
+}
+function renderStart(){
+  $("strip").innerHTML=T.slice(1).map(t=>'<i style="background:var(--rg-'+t[2]+')"></i>').join("");
+  $("legend").innerHTML=REGK.map(k=>'<span><i style="background:var(--rg-'+k+')"></i>'+REG[k]+' '+regTotal[k]+'</span>').join("");
+  $("heroes").innerHTML=[0,1,2,3].map(h=>heroCard(h,ui.hero===h,false)).join("");
+  const sv=lsGet(SAVE);let ok=false;
+  if(sv){try{const o=JSON.parse(sv);if(o&&o.G&&o.G.ver===6&&!o.G.over){ok=true;$("btn-cont").textContent="続きから（ラウンド "+o.G.round+" / "+o.G.max+"）"}}catch(e){}}
+  $("btn-cont").hidden=!ok;
+}
+function renderOnline(){
+  const el=$("online");
+  if(!(DB&&UID&&CAN)){
+    el.innerHTML='<p class="note">オンライン対戦は、このページを共有URLで開いた参加者（書き込み権限あり）が使えます。いまの画面では利用できないため、ソロでお楽しみください。</p>';
+    return;
+  }
+  const last=lsGet(LASTROOM);
+  el.innerHTML='<p class="note">簡易IDを決めて部屋をつくるか、友だちから聞いた部屋コードで入室します。</p>'
+   +'<label for="nick">簡易ID（表示名・2〜12文字）</label>'
+   +'<input id="nick" type="text" maxlength="12" autocomplete="off" placeholder="例：ちゅらさん" value="'+esc(ui.nick)+'">'
+   +'<div class="cta" style="margin-top:10px"><button class="btn pri" data-u="create">部屋をつくる</button></div>'
+   +'<label for="rcode">部屋コード（4文字）</label>'
+   +'<div class="inl"><input id="rcode" type="text" maxlength="4" autocapitalize="characters" autocomplete="off" placeholder="ABCD" value="'+esc(ui.jc||"")+'"><button class="btn" data-u="join">入室</button></div>'
+   +(last?'<div class="cta" style="margin-top:10px"><button class="btn" data-u="rejoin">前回の部屋（'+esc(last)+'）に戻る</button></div>':'')
+   +'<p class="err" id="oerr" role="status"></p>';
+}
+function oerr(t){const e=$("oerr");if(e)e.textContent=t||"";const l=$("lb-err");if(l&&ui.screen==="lobby")l.textContent=t||""}
+
+function renderHint(){
+  const h=$("hint");if(!h||!G)return;
+  if(ui.msg){h.textContent=ui.msg;return}
+  if(G.over){h.textContent="ゲーム終了です。";return}
+  const p=cur();
+  if(!isMyTurn()){h.innerHTML='<b>'+esc(p.name)+'</b> の番です…';return}
+  if(!G.flow.r){
+    const ex=[];
+    if(prayKind()&&!G.flow.p)ex.push("今日は祈りの日。「祖霊」でお招きできます");
+    if(G.an[G.turn][dutyK()]>0&&!G.flow.j)ex.push("当番の術が使えます");
+    h.innerHTML='あなたの番です。<b>①サイコロ</b>を振りましょう'+(ex.length?'（'+ex.join("／")+'）':'（株は⑤から）')+'。';return}
+  const sel=ui.sel==null?p.pos:ui.sel;
+  h.innerHTML='現在地 <b>'+T[p.pos][1]+'</b>（購入）／ 選択中 <b>'+T[sel][1]+'</b>（開発・イベント）';
+}
+function renderDock(){
+  const el=$("steps");if(!G)return;
+  const my=isMyTurn(),f=G.flow,p=cur();
+  const sel=ui.sel==null?p.pos:ui.sel;
+  const can=my&&!busy;
+  const buyOk=can&&f.r&&!f.b&&p.pos>0&&G.tiles[p.pos].o<0&&p.cash>=buyCost(p.pos,G.turn);
+  const devOk=can&&f.r&&!f.d&&sel>0&&G.tiles[sel].o===G.turn&&G.tiles[sel].l<3&&p.cash>=devCost(sel,G.turn);
+  const evtOk=can&&f.r&&!f.e&&p.cash>=450;
+  const buyCostTxt=p.pos>0&&G.tiles[p.pos].o<0?mu(buyCost(p.pos,G.turn)).replace(" G","G"):"—";
+  const devCostTxt=sel>0&&G.tiles[sel].o===G.turn&&G.tiles[sel].l<3?mu(devCost(sel,G.turn)).replace(" G","G"):"—";
+  const dis=!my||G.over;
+  const sb=(a,g,l,s,cls)=>'<button class="sb '+cls+'" data-a="'+a+'"'+(dis?" disabled":"")+'><span class="g">'+g+'</span><span class="l">'+l+'</span><span class="s">'+s+'</span></button>';
+  el.innerHTML=
+    sb("roll",f.r?"✓":"①","サイコロ",f.r?'<span class="die">'+(G.dice>=1&&G.dice<=6?DICE[G.dice-1]:G.dice>6?G.dice:"術")+'</span>':"移動",f.r?"done":"go")
+   +sb("buy",f.b?"✓":"②","店舗購入",buyCostTxt,f.b?"done":(buyOk?"go":"dim"))
+   +sb("dev",f.d?"✓":"③","地域開発",devCostTxt,f.d?"done":(devOk?"":"dim"))
+   +sb("evt",f.e?"✓":"④","イベント",mu(450).replace(" G","G"),f.e?"done":(evtOk?"":"dim"))
+   +'<button class="sb" data-a="mk"><span class="g">⑤</span><span class="l">株・提携</span><span class="s">'+(my?"売買 "+(3-f.t)+"/3":"確認")+'</span></button>';
+  const eb=$("endb");eb.disabled=dis;eb.className="endb"+(f.r&&my?" go":"");
+  const ab=$("ancb"),needA=my&&((prayKind()&&!f.p)||(G.an[G.turn][dutyK()]>0&&!f.j&&!f.r));
+  ab.className="endb"+(needA?" go":"");
+}
+function renderGame(){
+  const p=cur();
+  const key=G.round+":"+G.turn;
+  if(key!==ui.turnKey){ui.turnKey=key;ui.sel=null}
+  const sel=ui.sel==null?p.pos:ui.sel;
+  const viewer=CTX.me>=0?CTX.me:G.turn;
+
+  $("g-round").textContent="ラウンド "+G.round+" / "+G.max;
+  $("g-bar").style.width=Math.round(((G.round-1)+(G.turn/G.players.length))/G.max*100)+"%";
+  $("g-turn").innerHTML=G.over?"終了":tok(p.hero,24)+'<span>'+esc(p.name)+'の番</span>';
+
+  $("players").innerHTML=G.players.map((q,i)=>
+    '<div class="pc'+(i===G.turn&&!G.over?" on":"")+'" style="--c:var(--p'+q.hero+')">'
+    +tok(q.hero,28)
+    +'<div class="pi"><b>'+esc(q.name)+'</b><small>'+HEROES[q.hero].role+(i===CTX.me?"・あなた":"")+'</small></div>'
+    +'<div class="pm"><strong>'+mu(q.cash)+'</strong><small>資産 '+mu(net(i))+'</small><small>'+ownedBy(i).length+'店・株 '+mu(stockVal(i))+'・'+q.laps+'周・祖霊'+G.an[i].filter(x=>x>0).length+'</small></div></div>'
+  ).join("");
+  const F=G.fore;
+  $("g-fore").innerHTML=F?'予報：<b>'+REG[F.k]+'</b>で'+F.text+' → 次のラウンド終了時に株価<span class="'+(F.d>0?"pos":"neg")+'">'+(F.d>0?" +12%":" −12%")+'</span>（的中率80%）':'';
+
+  $("g-mk").textContent="景況 ×"+G.market.toFixed(2);
+  $("g-gauge").innerHTML='<i style="left:'+Math.max(0,Math.min(100,(G.market-.8)/.5*100))+'%"></i>';
+  $("g-chips").innerHTML=REGK.map(k=>{
+    let n=0;G.tiles.forEach((t,i)=>{if(i&&t.o===viewer&&T[i][2]===k)n++});
+    const hot=G.buzz[k]>0;
+    return '<span class="chip'+(hot?" hot":"")+'" style="--rg:var(--rg-'+k+')"><i></i>'+REG[k]+' '+n+'/'+regTotal[k]+(hot?' 好調'+G.buzz[k]:'')+'</span>';
+  }).join("");
+
+  $("board").innerHTML=G.tiles.map((t,i)=>{
+    const r=Math.floor(i/6),c=i%6,col=(r%2===0?c:5-c)+1;
+    const here=G.players.map(q=>q.pos===i?'<span class="tok" style="--c:var(--p'+q.hero+');--s:15px">'+HEROES[q.hero].m+'</span>':"").join("");
+    const rg=T[i][2]==="-"?"var(--accent)":"var(--rg-"+T[i][2]+")";
+    const hasOwner=i>0&&t.o>=0;
+    const oc=hasOwner?"var(--p"+G.players[t.o].hero+")":"transparent";
+    const owner=hasOwner?'<span class="ow"><span class="dot"></span>'+(t.l?"Lv"+t.l:"")+'</span>':'<span class="ow"></span>';
+    const label=T[i][0]+(hasOwner?"、"+G.players[t.o].name+"の店 レベル"+t.l:"");
+    return '<button class="tile'+(i===0?" start":"")+(hasOwner?" own":"")+(i===p.pos?" turn":"")+(i===sel?" sel":"")+'" data-a="tile" data-i="'+i+'" aria-label="'+esc(label)+'" style="grid-row:'+(r+1)+';grid-column:'+col+';--reg:'+rg+';--oc:'+oc+'">'
+      +'<span class="no">'+(i||"")+'</span><span class="here">'+here+'</span>'
+      +'<b class="nm">'+T[i][1]+'</b>'+(i===0?'<small>START</small>':owner)+((t.x>0||(G.W.yg.last&&G.W.yg.pos===i&&G.round-G.W.yg.last.r<=1))?'<span class="cut" aria-label="ヤシガニの遮断">蟹</span>':'')+'</button>';
+  }).join("");
+
+  renderDetail(sel);
+  renderYg();
+  renderLast();
+  renderOver();
+  $("log").innerHTML=G.log.slice(0,16).map(x=>'<div>'+esc(x)+'</div>').join("");
+  $("menu").hidden=!ui.menu;
+  $("btn-title").textContent=ui.leaveArm?"本当にタイトルへ戻る":"タイトルへ戻る";
+  $("menu-note").textContent=CTX.mode==="solo"?"ソロの進行は自動で保存され、タイトルから続きを遊べます。":"オンライン対戦の部屋コード："+CTX.code;
+}
+function renderDetail(i){
+  const t=G.tiles[i],d=T[i];
+  if(i===0){
+    $("detail").innerHTML='<div class="t"><h2>首里城</h2><span class="rtag" style="--reg:var(--accent)">START</span></div>'
+      +'<p class="note">'+d[5]+'</p><div class="facts"><div><small>周回ボーナス</small><b>'+mu(300)+'</b></div><div><small>周回数</small><b>'+cur().laps+' 周（手番）</b></div></div>';
+    return;
+  }
+  const homeOf=HOME.indexOf(i);
+  const o=t.o>=0?G.players[t.o]:null;
+  $("detail").innerHTML='<div class="t"><h2>'+d[0]+'</h2><span class="rtag" style="--reg:var(--rg-'+d[2]+')">'+REG[d[2]]+'</span></div>'
+    +'<p class="note">No.'+i+'｜'+d[5]+(homeOf>=0?'（'+HEROES[homeOf].k+'ゆかりの地）':'')+'</p>'
+    +'<div class="facts">'
+    +'<div><small>所有者</small><b>'+(o?esc(o.name):"なし")+(o?"（Lv"+t.l+"）":"")+'</b></div>'
+    +'<div><small>観光需要</small><b>×'+d[4].toFixed(2)+'</b></div>'
+    +(o?'<div><small>通行料</small><b>'+mu(toll(i))+'</b></div><div><small>店舗収入 / ターン</small><b>'+mu(income(i))+'</b></div>'
+        :'<div><small>出店価格</small><b>'+mu(buyCost(i,G.turn))+'</b></div><div><small>基準価格</small><b>'+mu(d[3])+'</b></div>')
+    +(o&&o===cur()&&t.l<3?'<div><small>開発費（次のLv）</small><b>'+mu(devCost(i,G.turn))+'</b></div>':'')
+    +'</div>'
+    +(t.x>0?'<p class="note neg">ヤシガニの襲撃で遮断中（残り'+t.x+'ラウンド）。収入と通行料がゼロです。</p>':'');
+}
+function renderLast(){
+  const el=$("last"),L=G.last;
+  if(!L){el.hidden=true;return}
+  el.hidden=false;
+  const n=L.rev-L.cost,who=G.players[L.who];
+  el.innerHTML='<div class="sec-h"><h2 class="h">イベントの収支</h2><span class="note">R'+L.r+'｜'+esc(who.name)+'｜'+T[L.i][0]+'</span></div>'
+    +'<div class="row3"><div><small>収入</small><b>'+mu(L.rev)+'</b></div><div><small>費用</small><b>'+mu(L.cost)+'</b></div>'
+    +'<div><small>収支</small><b class="'+(n>=0?"pos":"neg")+'">'+(n>=0?"+":"")+mu(n)+'</b></div></div>'
+    +'<p class="note">市場への影響：景況 ×'+L.m0.toFixed(2)+' → ×'+L.m1.toFixed(2)
+    +(REG[L.reg]?'。'+REG[L.reg]+'エリアは3ラウンド好調（通行料・収入 +10%）':'')+'。</p>';
+}
+function renderOver(){
+  const el=$("over");
+  if(!G.over){el.hidden=true;return}
+  el.hidden=false;
+  const order=G.players.map((p,i)=>i).sort((a,b)=>net(b)-net(a));
+  el.innerHTML='<h2>結果発表</h2><p class="note">資産（現金＋店舗の価値＋株・投信）の順位です。</p><ol class="rank">'
+    +order.map((i,k)=>{const p=G.players[i];return '<li><span class="rn">'+(k+1)+'</span>'+tok(p.hero,30)
+      +'<span><b>'+esc(p.name)+'</b><small>資産 '+yen(net(i))+'（US$'+usdF(net(i)/G.fx.rate)+'）｜現金 '+mu(p.cash)+'｜'+ownedBy(i).length+'店｜株 '+mu(stockVal(i))+'｜投信 '+mu(fundVal(i))+'</small></span></li>'}).join("")
+    +'</ol>'+ygReport()+'<div class="cta" style="margin-top:10px">'+(CTX.mode==="solo"?'<button class="btn pri" data-u="solo">もう一度あそぶ</button>':'')+'<button class="btn" data-u="title">タイトルへ戻る</button></div>';
+}
+function sparkSvg(h,w0,h0){
+  if(!h||h.length<2)return "";
+  const w=w0||64,hh=h0||22,mn=Math.min.apply(null,h),mx=Math.max.apply(null,h),rg=(mx-mn)||1;
+  const pts=h.map((v,i)=>(i/(h.length-1)*(w-6)+3).toFixed(1)+","+(hh-3-((v-mn)/rg)*(hh-6)).toFixed(1));
+  const lp=pts[pts.length-1].split(","),col=h[h.length-1]>=h[0]?"var(--good)":"var(--bad)";
+  return '<svg class="spark" viewBox="0 0 '+w+' '+hh+'" width="'+w+'" height="'+hh+'" role="img" aria-label="直近の株価推移"><polyline points="'+pts.join(" ")+'" fill="none" stroke="'+col+'" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/><circle cx="'+lp[0]+'" cy="'+lp[1]+'" r="2.4" fill="'+col+'"/></svg>';
+}
+function renderFx(){
+  const el=$("fxcard");if(!el||!G||!G.fx)return;
+  const X=G.fx,F=G.fxf,pend=X.q.reduce((a,b)=>a+b,0);
+  const eff=fxm()-1,pe=.3*FXS*pend;
+  const pc=v=>(v>=0?"+":"−")+Math.abs(v*100).toFixed(1)+"%";
+  const cl=v=>v>=0?"pos":"neg";
+  const last=G.round>1?"前回 "+(X.d>=0?"円安 ":"円高 ")+pc(X.d):"開始時";
+  el.innerHTML='<div class="sec-h"><h2 class="h">為替（円／ドル）</h2><button class="menu" data-u="usd" aria-pressed="'+(ui.usd?"true":"false")+'">表示：'+(ui.usd?"ドル":"円")+'</button></div>'
+   +'<div class="fxrow"><div class="fxbig"><strong>¥'+X.rate.toFixed(2)+'</strong><small>基準 ¥'+X.base.toFixed(2)+'・'+last+'</small></div>'+sparkSvg(X.hist,120,34)+'</div>'
+   +'<div class="facts"><div><small>収益に反映済み</small><b class="'+cl(eff)+'">'+pc(eff)+'</b></div><div><small>これから反映</small><b class="'+cl(pe)+'">'+pc(pe)+'</b></div></div>'
+   +(F?'<p class="note" style="margin-top:8px">為替予報：<b>'+F.text+'</b> → 次のラウンド終了時に'+(F.d>0?"円安":"円高")+'方向（的中率80%）</p>':'')
+   +'<p class="note">収益は国内需要70%・海外需要30%。円安は海外分の収益を押し上げ、円高は押し下げます。変動の40%が次のラウンドに、30%ずつがその後2ラウンドに反映されます。</p>';
+}
+function renderSheet(){
+  $("sheet").hidden=!(ui.sheet&&G);
+  if(!ui.sheet||!G)return;
+  const viewer=CTX.me>=0?CTX.me:G.turn,my=isMyTurn();
+  $("sh-msg").textContent=ui.msg||(my?"売買は1ターン3回まで。手数料は1%です。":"いまは "+cur().name+" の番です。株価と予報を確認できます。");
+  const F=G.fore;
+  $("sh-fore").innerHTML=F
+    ?'<div class="sec-h"><h2 class="h">市場予報</h2><span class="note">的中率 80%</span></div><p><b>'+REG[F.k]+'</b>：'+F.text+'<br><span class="'+(F.d>0?"pos":"neg")+'">次のラウンド終了時に株価 '+(F.d>0?"+12%":"−12%")+'</span></p>'
+    :'<p class="note">最終ラウンドです。予報はありません。</p>';
+  $("sh-qty").innerHTML='<span class="note">数量</span>'+[1,10,25].map(q=>'<button class="qb" data-q="'+q+'" aria-pressed="'+(ui.qty===q?"true":"false")+'">'+q+'株</button>').join("")
+    +'<span class="note">売買枠 '+(my?"あと "+(3-G.flow.t)+" 回":"—")+'</span>';
+  $("sh-rows").innerHTML=REGK.map(k=>{
+    const px=pxr(k),prev=G.hist[k][G.hist[k].length-1],ch=G.px[k]/prev-1;
+    const n=G.sh[viewer][k],th=topHolder(k);
+    const thTxt=th>=0?"筆頭株主 "+esc(G.players[th].name)+(th===viewer?"（あなた）":""):"筆頭株主なし（10株以上で候補）";
+    return '<div class="srow" style="--rg:var(--rg-'+k+')"><div class="l1"><div><b>'+REG[k]+'株</b><br><small class="note">適正 '+mu(fund(k))+'</small></div>'
+      +'<div class="pr"><strong>'+mu(px)+'</strong><small class="'+(ch>=0?"pos":"neg")+'">'+(ch>=0?"▲":"▼")+Math.abs(ch*100).toFixed(1)+'%</small></div>'
+      +'<div class="tbs"><button class="tb buy" data-t="buy" data-k="'+k+'" aria-label="'+REG[k]+'株を買う">買</button><button class="tb" data-t="sell" data-k="'+k+'" aria-label="'+REG[k]+'株を売る">売</button></div></div>'
+      +'<div class="l2">'+sparkSvg(G.hist[k].concat([G.px[k]]))+'<div class="hd"><span>保有 <b>'+n+'株</b>（'+mu(n*px)+'）</span><small class="note">'+thTxt+'</small></div></div></div>';
+  }).join("");
+  const v0=Math.max(viewer,0);
+  $("sh-pact").innerHTML='<div class="sec-h"><h2 class="h">提携交渉</h2><span class="note">'+mu(300)+'／1ターン1回'+(my&&G.flow.n?"（済）":"")+'</span></div>'
+    +'<p class="note" style="margin-bottom:8px">成功すると3ラウンド、その地域の自店舗の収入と通行料が +15%、株価も +3%。失敗すると費用は戻りません。</p>'
+    +'<div class="pgrid">'+REGK.map(k=>{
+      const P=G.pact[k];
+      const st=P.left>0?(P.o===viewer?"提携中 残"+P.left:"他社が提携中"):"成功率 "+Math.round(pactChance(k,v0)*100)+"%";
+      return '<button class="pb" style="--rg:var(--rg-'+k+')" data-p="'+k+'"><b>'+REG[k]+'</b><small>'+st+'</small></button>';
+    }).join("")+'</div>';
+  renderSheetX();
+}
+function moonSvg(d,px){
+  const age=(d-1)/29.5,wax=age<=.5,a=wax?age:1-age;
+  const r=20,c=22,k=Math.cos(2*Math.PI*a),rx=Math.abs(k)*r,sw=k>0?0:1;
+  const lit=a<.005?"":"M"+c+","+(c-r)+" A"+r+","+r+" 0 0 1 "+c+","+(c+r)+" A"+rx.toFixed(2)+","+r+" 0 0 "+sw+" "+c+","+(c-r)+" Z";
+  const g=wax?"":' transform="translate(44,0) scale(-1,1)"';
+  return '<svg viewBox="0 0 44 44" width="'+px+'" height="'+px+'" role="img" aria-label="旧暦'+d+'日の月"><circle cx="22" cy="22" r="20" fill="var(--moon-dark)" stroke="var(--line)"/>'+(lit?'<path d="'+lit+'" fill="var(--moon-lit)"'+g+'/>':'')+'</svg>';
+}
+function renderMoon(){
+  const el=$("moon");if(!el||!G)return;
+  const d=G.round,pk=prayKind(),k=dutyK(),A=ANC[k];
+  const viewer=CTX.me>=0?CTX.me:G.turn,L=G.an[viewer][k],nm=moonName(d);
+  const nx=[1,8,15,23].find(x=>x>d);
+  const nxt=nx?'次の祈りの日：旧暦'+nx+'日（'+moonName(nx)+'・'+(nx===1||nx===15?'大祈り':'小祈り')+'）':'祈りの日は終わりました。';
+  el.innerHTML='<div class="moonrow">'+moonSvg(d,52)+'<div class="mtxt"><b>旧暦 '+d+'日'+(nm?'・'+nm:'')+'</b>'
+    +'<span>今日の当番：'+A.n+'（'+A.pc+'格）'+(L>0?'・お招き済み Lv'+L:'')+'</span>'
+    +'<small class="note">'+(pk?(pk===2?'大祈りの日です。供物を捧げて祖霊をお招きできます。':'小祈りの日です。供物を捧げて祖霊をお招きできます。'):nxt)+'</small></div>'
+    +'<button class="menu" data-a="anc">祖霊</button></div>';
+}
+const pct=v=>(v*100).toFixed(1)+"%";
+function ancLine(k,L){
+  const e=ancE(k,L),v=pct(e);
+  return ["店舗収入 +"+v,"支出の"+v+"を現金で還元","提携交渉の成功率 +"+v,"イベント収益 +"+v,"払う通行料 −"+v,"景況・為替の逆風を"+v+"軽減","自分の店舗収入 +"+v+"、全員 +"+pct(e/2)][k];
+}
+function renderAnc(){
+  const sh=$("asheet");sh.hidden=!(ui.asheet&&G);
+  if(!ui.asheet||!G)return;
+  const viewer=CTX.me>=0?CTX.me:G.turn,my=isMyTurn(),pk=prayKind(),dk=dutyK(),f=G.flow,d=G.round,nm=moonName(d),A0=ANC[dk];
+  $("as-msg").textContent=ui.msg||(my?(pk&&!f.p?"今日は"+(pk===2?"大祈り":"小祈り")+"の日です。1体をお招きできます。":"お招き済みの当番の祖霊は、サイコロの前に術を使えます。"):"いまは "+cur().name+" の番です。祖霊の確認だけできます。");
+  $("as-info").innerHTML='<b>旧暦 '+d+'日'+(nm?'・'+nm:'')+'</b><br><span class="note">今日の当番は'+A0.n+'（'+A0.pc+'格）。当番日から3日間、癒しの加護がはたらきます。'+(pk?'今日は'+(pk===2?'大祈り':'小祈り')+'の日で、供物は'+mu(pk===2?200:100)+'×次のレベルです。':'')+'</span>';
+  const reg=my?(cur().pos===0?"s":T[cur().pos][2]):null;
+  $("as-rows").innerHTML=ANC.map((A,k)=>{
+    const L=G.an[viewer][k],duty=k===dk,on=L>0&&ancOn(viewer,k)>0;
+    const wait=(k-dk+7)%7;
+    const st=duty?"今日が当番日":"次の当番日まで"+wait+"日";
+    const jb=(label,attrs)=>'<button class="btn pri" data-an="jut" data-k="'+k+'"'+attrs+'>'+label+'</button>';
+    let btns="";
+    if(my&&pk&&!f.p&&L<5)btns+='<button class="btn" data-an="pray" data-k="'+k+'">'+(L?'もう一度お招き（Lv'+(L+1)+'）':'お招き')+' '+mu(prayCost(viewer,k))+'</button>';
+    let jnote="";
+    if(my&&duty&&L>0&&!G.over){
+      if(f.j)jnote="今日の術は使用済みです。";
+      else if(f.r)jnote="サイコロの後は術を使えません。";
+      else if(k<=2)btns+=jb("術を使って進む","");
+      else if(k===3)btns+=jb("前進",' data-dir="1"')+jb("後退",' data-dir="-1"');
+      else if(k===4)btns+=jb("その場に留まる","");
+      else if(k===5)btns+=jb("6マス前へ",' data-dir="1"')+jb("6マス後ろへ",' data-dir="-1"');
+      else btns+=T.map((t,i)=>(i&&t[2]===reg&&i!==cur().pos)?'<button class="qb" data-an="jut" data-k="6" data-to="'+i+'">'+t[1]+'</button>':'').join("");
+    }
+    return '<div class="arow'+(on?' on':'')+'"><div class="a1"><span class="pcs">'+A.pc+'</span><div class="at"><b>'+A.n+'</b><small>'+A.g+'代上・'+A.sx+'／'+A.pc+'格</small><small>'+A.sf+'（'+A.sj+'）・'+A.el+'｜零点 '+A.z.toFixed(2)+'</small></div><div class="lv">'+(L?'Lv'+L:'未招')+'</div></div>'
+      +'<p class="ae">'+(L?'':'Lv1の効果：')+ancLine(k,Math.max(1,L))+'</p>'
+      +'<p class="note">術：'+A.j+'｜'+st+(on?'｜加護中':'')+(jnote?'｜'+jnote:'')+'</p>'
+      +(btns?'<div class="ab">'+btns+'</div>':'')+'</div>';
+  }).join("");
+}
+function onAnc(t,k,dir,to){
+  if(!G||G.over)return;
+  if(!isMyTurn()){msg("いまは自分の番ではありません");return}
+  if(t==="pray")act(aPray,k);
+  else if(t==="jut"){
+    const jp={};
+    if(dir!==undefined&&dir!=="")jp.dir=+dir;
+    if(to!==undefined&&to!=="")jp.to=+to;
+    ui.asheet=false;renderAnc();
+    act(aRoll,jp);
+  }
+}
+function render(){
+  if(!G||ui.screen!=="game")return;
+  renderGame();renderMoon();renderFx();renderDock();renderHint();renderSheet();renderAnc();
+}
+
+/* ---------- lobby / online ---------- */
+function renderLobby(){
+  if(ui.screen!=="lobby")return;
+  $("lb-code").textContent=room.code||"----";
+  const me=room.seats.find(s=>s.uid===UID);
+  const taken=new Set(room.seats.filter(s=>s.uid!==UID).map(s=>s.hero));
+  $("lb-seats").innerHTML=room.seats.length?room.seats.map(s=>'<li>'+tok(s.hero,26)+'<b>'+esc(s.name)+(s.uid===UID?"（あなた）":"")+'</b><small class="note">'+(room.meta&&s.uid===room.meta.host?"ホスト":"")+'</small></li>').join(""):'<li><b class="note">参加者を待っています…</b></li>';
+  $("lb-heroes").innerHTML=[0,1,2,3].map(h=>heroCard(h,me&&me.hero===h,taken.has(h))).join("");
+  const host=!!(room.meta&&room.meta.host===UID);
+  $("lb-start").hidden=!host;$("lb-aiwrap").hidden=!host;$("lb-fxwrap").hidden=!host;
+  $("lb-start").disabled=!(room.seats.length>=2||$("lb-ai").checked);
+  $("lb-wait").textContent=host?"":"ホストがゲームを開始するのを待っています。";
+}
+function validNick(){
+  const el=$("nick");const v=(el?el.value:ui.nick).trim();
+  if(v.length<2||v.length>12){oerr("簡易IDは2〜12文字で入力してください");return null}
+  ui.nick=v;lsSet(NICK,v);return v;
+}
+/* ---------- P2P（PeerJS）：ホストが親、友だちは子 ---------- */
+const UIDK="obi_uid",HOSTK="obi_host_v6";
+const PEERLIBS=["https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js","https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js","https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js"];
+const PEEROPTS=window.__PEER_OPTS||{config:{iceServers:[{urls:"stun:stun.l.google.com:19302"},{urls:"stun:global.stun.twilio.com:3478"}]}};
+const NET={peer:null,conns:{},hc:null,off:{},seen:{},timer:null,ping:null,libP:null};
+const pid=code=>"obi6-"+code;
+function loadPeerLib(){
+  if(NET.libP)return NET.libP;
+  NET.libP=new Promise(res=>{
+    if(window.Peer)return res(true);
+    const list=(window.__PEER_LIBS||PEERLIBS).slice();
+    const next=()=>{
+      const u=list.shift();if(!u){NET.libP=null;return res(false)}
+      const s=document.createElement("script");s.src=u;
+      s.onload=()=>res(!!window.Peer);
+      s.onerror=()=>{s.remove();next()};
+      document.head.appendChild(s);
+    };
+    next();
+  });
+  return NET.libP;
+}
+function newPeer(id){
+  return new Promise((res,rej)=>{
+    let done=false;
+    const p=id?new Peer(id,PEEROPTS):new Peer(PEEROPTS);
+    const to=setTimeout(()=>{if(!done){done=true;try{p.destroy()}catch(e){}rej({type:"timeout"})}},12000);
+    p.on("open",()=>{if(!done){done=true;clearTimeout(to);res(p)}});
+    p.on("error",e=>{if(!done){done=true;clearTimeout(to);try{p.destroy()}catch(x){}rej(e||{})}});
+  });
+}
+function netClose(){
+  clearInterval(NET.timer);NET.timer=null;clearInterval(NET.ping);NET.ping=null;
+  const p=NET.peer;
+  NET.peer=null;NET.conns={};NET.hc=null;NET.off={};NET.seen={};
+  try{if(p)p.destroy()}catch(e){}
+}
+function netLeave(){
+  if(CTX.mode!=="online")return;
+  if(CTX.host)hostBroadcast({t:"err",text:"ホストが部屋を閉じました。ホストが戻ると、前回の部屋から再接続できます"});
+  else if(NET.hc&&NET.hc.open){try{NET.hc.send({t:"leave"})}catch(e){}}
+}
+const send=(c,m)=>{try{if(c&&c.open)c.send(m)}catch(e){}};
+function hostBroadcast(m,except){Object.keys(NET.conns).forEach(u=>{if(u!==except)send(NET.conns[u],m)})}
+function hostSave(){
+  if(!CTX.host)return;
+  if(G&&G.over){lsSet(HOSTK,"");return}
+  lsSet(HOSTK,JSON.stringify({code:room.code,meta:room.meta,seats:room.seats,G}));
+}
+function pushLobby(){renderLobby();hostBroadcast({t:"lobby",seats:room.seats,meta:room.meta});hostSave()}
+function netState(){
+  if(CTX.host){hostBroadcast({t:"state",G});hostSave()}
+  else send(NET.hc,{t:"state",G});
+}
+function netSync(){if(!CTX.host)send(NET.hc,{t:"sync"})}
+function netHero(h){
+  if(!room.code)return;
+  if(CTX.host)hostHero(UID,h);else send(NET.hc,{t:"hero",h});
+}
+/* --- ホスト側 --- */
+function hostAttach(conn){
+  let uid=null;
+  conn.on("data",m=>{
+    if(!m||!m.t)return;
+    if(m.t==="join"){uid=String(m.uid||"").slice(0,40);if(uid)hostJoin(conn,uid,String(m.name||"").slice(0,12));return}
+    if(!uid)return;
+    NET.seen[uid]=Date.now();
+    if(m.t==="hero")hostHero(uid,+m.h);
+    else if(m.t==="state")hostState(uid,m.G,conn);
+    else if(m.t==="sync")send(conn,{t:"state",G,force:true});
+    else if(m.t==="leave")hostDrop(uid,true);
+  });
+  conn.on("close",()=>{if(uid&&NET.conns[uid]===conn)hostDrop(uid,false)});
+  conn.on("error",()=>{});
+}
+function hostReject(conn,uid,text){
+  send(conn,{t:"err",text});
+  if(NET.conns[uid]===conn)delete NET.conns[uid];
+  setTimeout(()=>{try{conn.close()}catch(e){}},400);
+}
+function hostJoin(conn,uid,name){
+  const old=NET.conns[uid];
+  if(old&&old!==conn){try{old.close()}catch(e){}}
+  NET.conns[uid]=conn;delete NET.off[uid];NET.seen[uid]=Date.now();
+  if(room.meta.status==="play"&&G){
+    const i=G.players.findIndex(p=>p.uid===uid);
+    if(i<0){hostReject(conn,uid,"ゲームはすでに始まっています");return}
+    const p=G.players[i];
+    if(p._sub){p.ai=false;delete p._sub;say(p.name+"が戻ってきました");G.rev=(G.rev||0)+1}
+    send(conn,{t:"state",G,force:true});
+    hostBroadcast({t:"state",G},uid);hostSave();render();pump();return;
+  }
+  let s=room.seats.find(x=>x.uid===uid);
+  if(!s){
+    if(room.seats.length>=4){hostReject(conn,uid,"この部屋は満員です");return}
+    const used=new Set(room.seats.map(x=>x.hero));
+    s={uid,name:name||"ゲスト",hero:[0,1,2,3].find(x=>!used.has(x)),t:Date.now()};
+    room.seats.push(s);
+  }else if(name)s.name=name;
+  send(conn,{t:"lobby",seats:room.seats,meta:room.meta});
+  pushLobby();
+}
+function hostHero(uid,h){
+  if(room.meta.status!=="lobby"||!(h>=0&&h<=3))return;
+  const s=room.seats.find(x=>x.uid===uid);
+  if(!s||room.seats.some(x=>x.uid!==uid&&x.hero===h))return;
+  s.hero=h;pushLobby();
+}
+function hostDrop(uid,leave){
+  delete NET.conns[uid];
+  if(room.meta.status==="lobby"){room.seats=room.seats.filter(s=>s.uid!==uid);pushLobby()}
+  else NET.off[uid]=leave?Date.now()-60000:Date.now();
+}
+function hostState(uid,g,conn){
+  if(!G||room.meta.status!=="play"||!g||g.ver!==6||g.gameId!==G.gameId)return;
+  const p=G.players[G.turn];
+  if(!(p&&p.uid===uid)||!(g.rev>G.rev)){send(conn,{t:"state",G,force:true});return}
+  G=g;
+  hostBroadcast({t:"state",G},uid);hostSave();render();pump();
+}
+function hostWatch(){
+  if(!CTX.host||!G||G.over||room.meta.status!=="play")return;
+  const p=cur();if(!p||p.ai||!p.uid||p.uid===UID)return;
+  const t=NET.off[p.uid]||NET.seen[p.uid]||0;
+  if(t&&Date.now()-t>(window.__OFFMS||60000)){
+    p.ai=true;p._sub=true;say(p.name+"の接続が切れたため、AIが代わりに進めます");
+    G.rev=(G.rev||0)+1;netState();render();pump();
+  }
+}
+function startHost(peer,code,saved){
+  NET.peer=peer;NET.conns={};NET.off={};
+  CTX={mode:"online",me:-1,code,host:true};room.code=code;
+  room.meta=saved?saved.meta:{code,host:UID,status:"lobby",created:Date.now()};
+  room.seats=saved&&saved.seats?saved.seats.filter(s=>s.uid===UID):[{uid:UID,name:ui.nick,hero:ui.hero,t:Date.now()}];
+  if(!room.seats.length)room.seats=[{uid:UID,name:ui.nick,hero:ui.hero,t:Date.now()}];
+  peer.on("connection",hostAttach);
+  peer.on("disconnected",()=>{try{peer.reconnect()}catch(e){}});
+  peer.on("error",()=>{});
+  lsSet(LASTROOM,code);
+  runId++;ui.sel=null;ui.turnKey="";ui.sheet=false;ui.asheet=false;ui.menu=false;ui.leaveArm=false;
+  if(saved&&saved.G&&saved.meta.status==="play"){
+    G=saved.G;CTX.me=G.players.findIndex(p=>p.uid===UID);show("game");render();pump();
+  }else{G=null;room.meta.status="lobby";show("lobby");renderLobby()}
+  clearInterval(NET.timer);NET.timer=setInterval(hostWatch,5000);
+  hostSave();oerr("");
+}
+async function createRoom(){
+  const n=validNick();if(!n)return;
+  oerr("部屋をつくっています…");
+  if(!await loadPeerLib()){oerr("通信ライブラリを読み込めませんでした。インターネット接続を確認してください");return}
+  stopRoom();G=null;
+  let peer=null,code=null;
+  for(let k=0;k<6&&!peer;k++){
+    code=Array.from({length:4},()=>"ABCDEFGHJKMNPQRSTUVWXYZ23456789"[rnd(31)]).join("");
+    try{peer=await newPeer(pid(code))}
+    catch(e){if(!(e&&e.type==="unavailable-id")){oerr("通信サーバーに接続できませんでした。時間をおいてもう一度お試しください");return}}
+  }
+  if(!peer){oerr("部屋を作れませんでした。もう一度お試しください");return}
+  startHost(peer,code,null);
+}
+async function rejoinRoom(code){
+  let saved=null;
+  try{const o=JSON.parse(lsGet(HOSTK)||"null");if(o&&o.code===code&&o.meta&&o.meta.host===UID)saved=o}catch(e){}
+  if(!saved){await enterRoom(code);return}
+  oerr("部屋を再開しています…");
+  if(!await loadPeerLib()){oerr("通信ライブラリを読み込めませんでした");return}
+  stopRoom();
+  try{const peer=await newPeer(pid(code));startHost(peer,code,saved)}
+  catch(e){oerr(e&&e.type==="unavailable-id"?"部屋がまだ閉じきっていません。1分ほど待ってからもう一度お試しください":"通信サーバーに接続できませんでした")}
+}
+async function onlineStart(){
+  if(!CTX.host||!room.meta||room.meta.status!=="lobby")return;
+  const used=new Set(),ps=[];
+  room.seats.slice(0,4).forEach(s=>{
+    let h=s.hero;if(h==null||used.has(h))h=[0,1,2,3].find(x=>!used.has(x));
+    used.add(h);ps.push({name:s.name,hero:h,uid:s.uid});
+  });
+  if($("lb-ai").checked)[0,1,2,3].forEach(h=>{if(ps.length<4&&!used.has(h)){used.add(h);ps.push({name:HEROES[h].k+"（AI）",hero:h,ai:true})}});
+  if(ps.length<2){oerr("2人以上が必要です（AIで埋めるにチェックしてください）");return}
+  const g=newGame(ps,readFx("lb-fx","lb-err"),readNk("lb-nk","lb-err"));g.rev=1;
+  room.meta.status="play";G=g;CTX.me=G.players.findIndex(p=>p.uid===UID);
+  runId++;ui.sel=null;ui.turnKey="";ui.sheet=false;ui.asheet=false;
+  hostBroadcast({t:"state",G,force:true});hostSave();show("game");pump();
+}
+/* --- 友だち側 --- */
+function clientGone(text){
+  const had=CTX.mode==="online"&&!CTX.host;
+  netClose();CTX={mode:"solo",me:0,code:null,host:false};room.code=null;room.seats=[];room.meta=null;G=null;runId++;
+  if(had){ui.menu=false;ui.sheet=false;ui.asheet=false;renderStart();renderOnline();show("start");$("sheet").hidden=true;$("asheet").hidden=true;oerr(text)}
+}
+function clientData(m){
+  if(!m||!m.t)return;
+  if(m.t==="lobby"){
+    room.seats=m.seats||[];room.meta=m.meta||room.meta;oerr("");
+    if(ui.screen!=="lobby"&&!G)show("lobby");
+    renderLobby();
+  }else if(m.t==="state"){
+    const g=m.G;
+    if(g&&g.ver===6&&(m.force||!G||g.gameId!==G.gameId||g.rev>G.rev)){
+      G=g;CTX.me=G.players.findIndex(p=>p.uid===UID);
+      if(room.meta)room.meta.status="play";
+      busy=false;
+      if(ui.screen!=="game")show("game");else render();
+    }
+  }else if(m.t==="err"){clientGone(m.text||"部屋から切断されました")}
+}
+async function enterRoom(code){
+  stopRoom();runId++;G=null;
+  oerr("接続中…");
+  if(!await loadPeerLib()){oerr("通信ライブラリを読み込めませんでした。インターネット接続を確認してください");return}
+  let peer;
+  try{peer=await newPeer()}catch(e){oerr("通信サーバーに接続できませんでした。時間をおいてもう一度お試しください");return}
+  NET.peer=peer;
+  const conn=peer.connect(pid(code),{reliable:true,serialization:"json"});
+  NET.hc=conn;CTX={mode:"online",me:-1,code,host:false};room.code=code;
+  let opened=false,failed=false;
+  const fail=t=>{if(failed)return;failed=true;clearTimeout(to);netClose();CTX={mode:"solo",me:0,code:null,host:false};room.code=null;oerr(t)};
+  const to=setTimeout(()=>{if(!opened)fail("部屋に接続できません。コードが違うか、ホストが画面を閉じています")},15000);
+  conn.on("open",()=>{opened=true;clearTimeout(to);lsSet(LASTROOM,code);send(conn,{t:"join",uid:UID,name:ui.nick});clearInterval(NET.ping);NET.ping=setInterval(()=>send(conn,{t:"ping"}),window.__PINGMS||5000)});
+  conn.on("data",clientData);
+  conn.on("close",()=>{if(NET.hc===conn&&opened)clientGone("ホストとの接続が切れました。「前回の部屋に戻る」で再接続できます")});
+  conn.on("error",()=>{});
+  peer.on("error",e=>{
+    if(!opened)fail(e&&e.type==="peer-unavailable"?"その部屋コードは見つかりません":"通信エラーが起きました（"+((e&&e.type)||"不明")+"）");
+  });
+  peer.on("disconnected",()=>{try{peer.reconnect()}catch(e){}});
+}
+function stopRoom(){netClose();room.unsubs=[];room.seats=[];room.meta=null;room.code=null}
+
+/* ---------- screens & events ---------- */
+function readNk(id,errId){
+  const el=$(id),v=parseFloat(String(el.value||"").replace(/[^0-9.]/g,"")),ok=v>=5000&&v<=200000,e=$(errId);
+  if(e)e.textContent=ok?"":"日経平均は5,000〜200,000で入力してください。40,000で開始します。";
+  if(!ok){el.value="40000";return 40000}
+  lsSet(NKK,String(Math.round(v)));return Math.round(v);
+}
+function readFx(id,errId){
+  const el=$(id),v=parseFloat(String(el.value||"").replace(/[^0-9.]/g,"")),ok=v>=80&&v<=250,e=$(errId);
+  if(e)e.textContent=ok?"":"基準レートは80〜250で入力してください。150で開始します。";
+  if(!ok){el.value="150";return 150}
+  lsSet(FXK,String(v));return +v.toFixed(2);
+}
+function startSolo(){
+  runId++;aiBusy=false;
+  const ps=[{name:HEROES[ui.hero].k+"（あなた）",hero:ui.hero}];
+  [0,1,2,3].filter(h=>h!==ui.hero).forEach(h=>ps.push({name:HEROES[h].k+"（AI）",hero:h,ai:true}));
+  G=newGame(ps,readFx("fxbase","fxerr"),readNk("nkbase","nkerr"));CTX={mode:"solo",me:0,code:null,host:false};
+  ui.sel=null;ui.turnKey="";ui.menu=false;ui.leaveArm=false;ui.sheet=false;ui.asheet=false;
+  persist();show("game");
+}
+function continueSolo(){
+  try{
+    const o=JSON.parse(lsGet(SAVE));if(!o||!o.G||o.G.ver!==6)return;
+    runId++;aiBusy=false;G=o.G;CTX={mode:"solo",me:0,code:null,host:false};
+    ui.sel=null;ui.turnKey="";ui.menu=false;ui.leaveArm=false;ui.sheet=false;ui.asheet=false;
+    show("game");pump();
+  }catch(e){}
+}
+function toTitle(){
+  runId++;aiBusy=false;
+  if(CTX.mode==="online"){
+    netLeave();stopRoom();
+  }
+  G=null;CTX={mode:"solo",me:0,code:null,host:false};
+  ui.menu=false;ui.leaveArm=false;ui.sheet=false;ui.asheet=false;
+  renderStart();renderOnline();show("start");$("sheet").hidden=true;$("asheet").hidden=true;
+}
+function pickHero(h){
+  if(ui.screen==="lobby"){
+    netHero(h);
+    return;
+  }
+  ui.hero=h;renderStart();
+}
+function onFund(id,dir){
+  if(!G||G.over)return;
+  if(!isMyTurn()){msg("売買は自分の番にだけできます");return}
+  act(()=>aFund(id,ui.qty,dir));
+}
+function onTilt(v){
+  if(!G||G.over)return;
+  if(!isMyTurn()){msg("構成の調整は自分の番にだけできます");return}
+  const a=v.split(":");act(()=>aTilt(a[0],a[1],+a[2]));
+}
+async function onNkSet(){
+  if(!G||G.over)return;
+  if(!(CTX.mode==="solo"||CTX.host)){msg("日経の手入力はホストだけができます");return}
+  const e=aNkSet($("nkin")?$("nkin").value.replace(/[^0-9.]/g,""):"");
+  if(e){msg(e);return}
+  if($("nkin"))$("nkin").value="";
+  msg("");
+  try{await persist()}catch(x){}
+  render();
+}
+function onTrade(k,dir){
+  if(!G||G.over)return;
+  if(!isMyTurn()){msg("株の売買は自分の番にだけできます");return}
+  act(()=>aTrade(k,ui.qty,dir));
+}
+function onPact(k){
+  if(!G||G.over)return;
+  if(!isMyTurn()){msg("提携交渉は自分の番にだけできます");return}
+  act(()=>aPact(k));
+}
+function onAct(a,el){
+  if(a==="tile"){ui.sel=+el.dataset.i;render();return}
+  if(!G)return;
+  if(a==="mk"){ui.sheet=true;renderSheet();return}
+  if(a==="anc"){ui.asheet=true;renderAnc();return}
+  if(G.over)return;
+  if(!isMyTurn()){msg("いまは自分の番ではありません");return}
+  const sel=ui.sel==null?cur().pos:ui.sel;
+  if(a==="roll")act(aRoll);
+  else if(a==="buy")act(aBuy);
+  else if(a==="dev")act(aDev,sel);
+  else if(a==="evt")act(aEvent,sel);
+  else if(a==="end")act(aEnd);
+}
+async function onUi(u){
+  try{
+    if(u==="solo")startSolo();
+    else if(u==="cont")continueSolo();
+    else if(u==="menu"){ui.menu=!ui.menu;ui.leaveArm=false;render()}
+    else if(u==="sheetx"){ui.sheet=false;renderSheet()}
+    else if(u==="asheetx"){ui.asheet=false;renderAnc()}
+    else if(u==="nkset"){onNkSet()}
+    else if(u==="usd"){ui.usd=!ui.usd;lsSet(USDK,ui.usd?"1":"0");render()}
+    else if(u==="title"){if(ui.screen==="game"&&!G.over&&!ui.leaveArm){ui.leaveArm=true;render();return}toTitle()}
+    else if(u==="leave")toTitle();
+    else if(u==="create")await createRoom();
+    else if(u==="join"){
+      const n=validNick();if(!n)return;oerr("");
+      const code=($("rcode").value||"").trim().toUpperCase();
+      if(!/^[A-Z0-9]{4}$/.test(code)){oerr("部屋コードは英数字4文字です");return}
+      await enterRoom(code);
+    }
+    else if(u==="rejoin"){
+      const n=validNick();if(!n)return;oerr("");
+      const c=lsGet(LASTROOM);if(c)await rejoinRoom(c);
+    }
+    else if(u==="ostart")await onlineStart();
+    else if(u==="copy"){
+      const c=room.code||"";
+      try{await navigator.clipboard.writeText("沖縄ビジネスアイランド 部屋コード："+c+"\n"+location.href.split("#")[0]+"#"+c);oerr("コードとURLをコピーしました："+c)}catch(e){oerr("コードをメモしてください："+c)}
+    }
+  }catch(e){oerr("うまくいきませんでした。通信状況を確認して、もう一度お試しください。")}
+}
+
+document.addEventListener("click",e=>{
+  const an=e.target.closest("[data-an]");
+  if(an){onAnc(an.dataset.an,+an.dataset.k,an.dataset.dir,an.dataset.to);return}
+  const hb=e.target.closest("[data-hero]");
+  if(hb){if(!hb.disabled)pickHero(+hb.dataset.hero);return}
+  const ftb=e.target.closest("[data-ft]");
+  if(ftb){onFund(ftb.dataset.fk,ftb.dataset.ft==="buy"?1:-1);return}
+  const tib=e.target.closest("[data-ti]");
+  if(tib){onTilt(tib.dataset.ti);return}
+  const tkb=e.target.closest("[data-tk]");
+  if(tkb){ui.tk=tkb.dataset.tk;renderSheet();return}
+  const tb=e.target.closest("[data-t]");
+  if(tb){onTrade(tb.dataset.k,tb.dataset.t==="buy"?1:-1);return}
+  const qb=e.target.closest("[data-q]");
+  if(qb){ui.qty=+qb.dataset.q;renderSheet();return}
+  const pb=e.target.closest("[data-p]");
+  if(pb){onPact(pb.dataset.p);return}
+  const ab=e.target.closest("[data-a]");
+  if(ab){onAct(ab.dataset.a,ab);return}
+  const ub=e.target.closest("[data-u]");
+  if(ub){onUi(ub.dataset.u)}
+});
+document.addEventListener("input",e=>{
+  if(e.target&&e.target.id==="nick")ui.nick=e.target.value;
+  if(e.target&&e.target.id==="lb-ai")renderLobby();
+});
+
+/* ---------- boot ---------- */
+async function cap(n){try{const c=window.claude;if(!c||!c.use)return null;return (await c.use(n))||null}catch(e){return null}}
+async function boot(){
+  UID=lsGet(UIDK);if(!UID){UID="u"+Math.random().toString(36).slice(2,10)+Date.now().toString(36);lsSet(UIDK,UID)}
+  {const h=(location.hash||"").replace("#","").toUpperCase();if(/^[A-Z0-9]{4}$/.test(h))ui.jc=h}
+  ui.nick=lsGet(NICK)||"";
+  ui.usd=lsGet(USDK)==="1";
+  {const fv=lsGet(FXK);if(fv){$("fxbase").value=fv;$("lb-fx").value=fv}}
+  {const nv=lsGet(NKK);if(nv){$("nkbase").value=nv;$("lb-nk").value=nv}}
+  renderStart();show("start");
+  loadPeerLib();
+  if(ui.screen==="start")renderOnline();
+}
+renderOnline();
+boot();
+})();
+</script>
+
+</body></html>
